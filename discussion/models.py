@@ -17,7 +17,7 @@ class StudentDiscussion(models.Model):
         return self.content[:30]
 
     def time(self):
-        return self.sent_at.strftime("%d-%b-%y, %I:%M %p")
+        return self.sent_at.strftime("%b-%d-%y, %I:%M %p")
 
 
 class FacultyDiscussion(models.Model):
@@ -35,4 +35,4 @@ class FacultyDiscussion(models.Model):
         return self.content[:30]
 
     def time(self):
-        return self.sent_at.strftime("%d-%b-%y, %I:%M %p")
+        return self.sent_at.strftime("%b-%d-%y, %I:%M %p")

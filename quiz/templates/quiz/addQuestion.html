@@ -35,7 +35,7 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+            href="{% url 'allQuizzes' course.code %}">Tests</a></li>
          <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page"> Add Question-{{quiz.title}}</li>
       </ol>
    </nav>
@@ -77,7 +77,7 @@
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="marks" class="col-sm-2 col-form-label fw-bold">Marks</label>
+         <label for="marks" class="col-sm-2 col-form-label fw-bold">Points</label>
          <div class="col-sm-10">
             <input type="number" min="1" class="form-control" id="marks" name="marks" required>
          </div>

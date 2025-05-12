@@ -140,7 +140,6 @@ def startQuiz(request, code, quiz_id):
     else:
         return redirect('std_login')
 
-
 def studentAnswer(request, code, quiz_id):
     if is_student_authorised(request, code):
         course = Course.objects.get(code=code)

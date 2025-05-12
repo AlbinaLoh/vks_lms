@@ -13,7 +13,7 @@ class Attendance(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.student.name + ' - ' + self.course.name + ' - ' + self.date.strftime('%d-%m-%Y')
+        return self.student.name + ' - ' + self.course.name + ' - ' + self.date.strftime('%m-%d-%Y')
 
     def total_absent(self):
         attendance = Attendance.objects.filter(

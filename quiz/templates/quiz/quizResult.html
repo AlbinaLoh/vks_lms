@@ -24,7 +24,7 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'course' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'myQuizzes' course.code %}">Quizzes</a></li>
+            href="{% url 'myQuizzes' course.code %}">Tests</a></li>
          <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">{{quiz.title}}</li>
       </ol>
    </nav>
@@ -44,7 +44,7 @@
             </p>
             <p><span class="material-symbols-outlined inline-icons me-2">
                military_tech
-               </span> Marks : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span>
+               </span> Points : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span>
             </p>
             <p> <span class="material-symbols-outlined inline-icons me-2">
                timer
@@ -118,10 +118,11 @@
    
    let time_taken = {{ quiz.time_taken }};
    function convertTime(timetaken) {
-       var hours = Math.floor(timetaken / 3600);
-       var minutes = Math.floor((timetaken - (hours * 3600)) / 60);
-       var seconds = timetaken - (hours * 3600) - (minutes * 60);
-         seconds = Math.floor(seconds);
+      var hours = Math.floor(timetaken / 3600);
+      var minutes = Math.floor((timetaken - (hours * 3600)) / 60);
+      var seconds = timetaken - (hours * 3600) - (minutes * 60);
+      
+       seconds = Math.floor(seconds);
        if (hours < 10) {
            hours = "0" + hours;
        }
@@ -131,6 +132,7 @@
        if (seconds < 10) {
            seconds = "0" + seconds;
        }
+
        if (hours == 0 && minutes == 0) {
            return seconds + " seconds";
        } else if (hours == 0) {

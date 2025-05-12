@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %} {{ assignment.title }} - eLMS {% endblock title %}
+{% block title %} {{ assignment.title }} - eSLS {% endblock title %}
 {% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
@@ -86,7 +86,7 @@
                      {% csrf_token %}
                      <div class="d-flex justify-content-center">
                         <div class="form-group">
-                           <input class="form-control text-center" type="number" placeholder="Marks" name="marks" id="marks"
+                           <input class="form-control text-center" type="number" placeholder="Points" name="marks" id="marks"
                               max="{{ assignment.marks}}" step=".1" min="0" value="{{submission.marks}}" required>
                         </div>
                         <button
@@ -101,7 +101,7 @@
                {% csrf_token %}
                <div class="d-flex justify-content-center">
                <div class="form-group">
-               <input class="form-control text-center" type="number" placeholder="Marks" name="marks" id="marks"
+               <input class="form-control text-center" type="number" placeholder="Points" name="marks" id="marks"
                   max="{{ assignment.marks}}" step=".1" min="0" required value="{{submission.marks}}"></div><button type="submit"
                   class="btn btn-outline-primary btn-sm ms-2"><img
                   src="{% static 'images/icon/check.png' %}" alt="set" style="height:1rem"></button>

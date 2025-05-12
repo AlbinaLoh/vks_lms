@@ -24,8 +24,8 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'allQuizzes' course.code %}">All quizzes</a></li>
-            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Create Quiz</li>
+               href="{% url 'allQuizzes' course.code %}">All tests</a></li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Create Test</li>
          </ol>
       </nav>
    </div>
@@ -34,12 +34,12 @@
 <div class="container d-flex justify-content-center mt-3" id="form">
    <div class="border shadow-sm border-light rounded pb-4 px-3 col-lg-8 col-sm-12 mt-3">
       <span class="fw-bold fs-5 d-flex justify-content-center my-3">
-      Create Quiz
+      Create Test
       </span>
       <form action="{% url 'quiz' course.code %}" method="POST">
          {% csrf_token %}
          <div class="mb-3 mt-3 fw-bold">
-            <label for="title" class="form-label">Quiz Title</label>
+            <label for="title" class="form-label">Test Title</label>
             <input type="text" class="form-control" id="title" name='title' required>
          </div>
          <div class="mb-3 fw-bold">

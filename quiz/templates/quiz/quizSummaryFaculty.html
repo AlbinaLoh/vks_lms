@@ -23,7 +23,7 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'allQuizzes' course.code %}">Quizzes</a></li>
+            href="{% url 'allQuizzes' course.code %}">Tests</a></li>
          <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">
             {{quiz.title}}
          </li>
@@ -62,48 +62,53 @@
          {% if quiz.total_marks %}
          <p><span class="material-symbols-outlined inline-icons me-2">
             military_tech
-            </span>Total Marks :<span class="fw-bold"> {{ quiz.total_marks }}</span>
+            </span>Total Points :<span class="fw-bold"> {{ quiz.total_marks }}</span>
          </p>
          {% endif %}
          <p><span class="material-symbols-outlined inline-icons me-2">
             timelapse
-            </span>Quiz Duration : <span class="fw-bold"> {{ quiz.duration }}</span>
+            </span>Test Duration : <span class="fw-bold"> {{ quiz.duration }}</span>
          </p>
       </div>
    </div>
 </div>
+<div class="container shadow-sm rounded border">
+   <div class="chart"> 
+      <canvas id="lineChart" height="300" width="300"></canvas>
+   </div>
+</div>
 {% if quiz.publish_status %}
 <p class="text-success fw-bold d-flex justify-content-center my-3">
-   Marks Published!
+   Grades Published!
 </p>
 {% else %}
 <div class="d-flex justify-content-center my-3">
    <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish marks</span> </button>
+      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Grades</span> </button>
    </form>
 </div>
 {% endif %}
 <div class="d-flex justify-content-center my-3">
-   <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show marks</button>
+   <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show Grades</button>
 </div>
 <div class="container p-3 shadow-sm rounded" id="allmarks">
-   <div class="fw-bold">Marks of students</div>
+   <div class="fw-bold">Points of Students</div>
    {% if quiz.attempted_students %}
 <div class="table-responsive">
    <table class="table text-center table-borderless" style="white-space: nowrap;">
       <thead class="border-bottom">
          <tr>
-            <th scope="col">SL</th>
+            <!--th scope="col">SL</th-->
             <th scope="col" colspan="2">Student</th>
             <th scope="col">ID</th>
-            <th scope="col">Marks</th>
+            <th scope="col">Points</th>
             <th scope="col">Submitted on</th>
          </tr>
       </thead>
       <tbody>
          {% for student in students %}
          <tr>
-            <td>{{forloop.counter}}</td>
+            <!--td>{{forloop.counter}}</td-->
             <td class="text-end"><img class="rounded-circle" src="/media/{{student.photo}}" alt="image"
                style="height: 2.5rem;"></td>
             <td class="fw-bold text-start">{{student.name}}</td>
@@ -121,7 +126,7 @@
    </table>
 </div>
    {% else %}
-   <div class="text-center">No students have attempted this quiz yet</div>
+   <div class="text-center">No students have attempted this test yet</div>
    {% endif %}
 </div>
 <div class="container">
@@ -144,7 +149,7 @@
                   <p style="font-size: 15px;" class="margin-p-bottom">Answer : <span class="fw-bold">{{question.answer}}</span></p>
                </div>
                <div class="col-6">
-                  <p style="font-size: 15px;" class="margin-p-bottom">Marks : <span class="fw-bold">{{question.marks}}</span></p>
+                  <p style="font-size: 15px;" class="margin-p-bottom">Points : <span class="fw-bold">{{question.marks}}</span></p>
                </div>
             </div>
             <div class="row">
@@ -172,7 +177,7 @@
 </div>
 {% else %}
 <div class="fw-bold text-center">
-   Quiz not started yet
+   Test not started yet
 </div>
 {% endif %}
 </div>
@@ -214,7 +219,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Responeses',
+                    text: 'Responses',
                 }
             }, 
             animation : true,
@@ -238,6 +243,63 @@
         }
     });
     {% endfor %}
+   
+    {% for question in questions %}
+    var data{{question.id}} = {
+        labels: [
+        'A',
+        'B',
+        'C',
+        'D'
+        ],
+        datasets: [{
+            label: 'Time Taken',
+            data: [{{question.A}}, {{question.B}}, {{question.C}}, {{question.D}}],
+            backgroundColor: color,
+            borderColor: color,
+            borderWidth: 1,
+            hoverBorderColor: 'deepskyblue',
+            hoverBorderWidth: 1,
+            hoverBorderRadius: 5,
+            hoverBorderDash: [5, 5],
+            hoverBorderDashOffset: 0.0,
+        }]
+    };
+    {% endfor %}
+    {% for question in questions %}
+    var ctx{{question.id}} = document.getElementById('lineChart').getContext('2d');
+    var myChart{{question.id}} = new Chart(ctx{{question.id}}, {
+        type: 'line',
+        data: data{{question.id}},
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Time Taken on Test',
+                }
+            }, 
+            animation : true,
+            animationSteps : 60,
+            animationEasing : 'easeOutBounce',
+            maintainAspectRatio: false,
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                }
+            },       
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        startAtZero: true  
+                    }
+                }]
+            }
+        }
+    });
+    {% endfor %}
+
    $(document).ready(function () {
     $('.bt').click(function () {
         $('html, body').animate({
@@ -248,7 +310,7 @@
    $('#allmarks').hide();
    $('#showMarks').click(function () {
       $(this).text(function (i, text) {
-         return text === "Hide marks" ?  "Show marks" : "Hide marks";
+         return text === "Hide Grades" ?  "Show Grades" : "Hide Grades";
       });
       $('#allmarks').toggle('slow');
    });

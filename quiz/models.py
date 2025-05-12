@@ -18,7 +18,7 @@ class Quiz(models.Model):
     started = models.BooleanField(default=False, null=True, blank=True)
 
     class Meta:
-        verbose_name_plural = "Quizzes"
+        verbose_name_plural = "Tests"
         ordering = ['-created_at']
 
     def __str__(self):
@@ -47,7 +47,6 @@ class Quiz(models.Model):
 
     def attempted_students(self):
         return Student.objects.filter(studentanswer__quiz=self).distinct().count()
-
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)

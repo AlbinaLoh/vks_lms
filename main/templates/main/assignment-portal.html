@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %} {{ assignment.title }} - eLMS {% endblock title %}
+{% block title %} {{ assignment.title }} - eSLS {% endblock title %}
 {% block profile %}
 {% url 'profile' student.student_id %}
 {% endblock %}
@@ -34,7 +34,7 @@
       <h4>{{assignment.title}}</h4>
       <div class="p-2 text-break">{% autoescape off %}{{assignment.description}}{% endautoescape %}</div>
       <h6 class="p-2 fw-bold">Deadline: <span class="px-2 text-danger"> {{assignment.post_date}} </span></h6>
-      <label class="p-2 fw-bold" for="">Total Marks: </label>
+      <label class="p-2 fw-bold" for="">Total Points: </label>
       <span style="color: black;" class="p-2 fw-bold">{{assignment.marks}}</span><br>
       {% if assignment.file %}
       <label class="p-2 fw-bold" for="">Attachment: &nbsp <a
