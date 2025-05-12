@@ -37,7 +37,7 @@ A learning management and online assessment system for academic education.
 1. Clone the project
 
 ```bash
-git clone https://github.com/aubrib/eSLS-SWE.git
+git clone https://github.com/AlbinaLoh/vks_lms.git
 ```
 
 2. Go to the project directory
