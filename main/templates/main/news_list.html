@@ -9,21 +9,25 @@
     <a href="{% url 'news_create' %}" class="btn btn-primary mb-3">Создать новость</a>
 {% endif %}
 
-    {% for item in news %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ item.title }}</h5>
-                <p class="card-text">{{ item.content|linebreaks }}</p>
-                <p class="text-muted small">
-                    {{ item.created_at|date:"d.m.Y H:i" }} | Автор: {{ item.faculty.user.get_full_name }}
-                </p>
-                {% if user.is_authenticated and user.faculty and item.faculty == user.faculty %}
-                    <a href="{% url 'news_edit' item.pk %}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
-                {% endif %}
-            </div>
+{% for item in news %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{% url 'news_detail' item.pk %}" class="text-decoration-none">{{ item.title }}</a>
+            </h5>
+            <p class="card-text">{{ item.content|truncatewords:30 }}</p>
+            <p class="text-muted small">
+                 {{ item.created_at|date:"d.m.Y H:i" }} <!--| Автор: {{ item.faculty.name }} -->
+            </p>
+            
+            {% if request.session.faculty_id %}
+                <a href="{% url 'news_edit' item.pk %}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+            {% endif %}
+            
+            <a href="{% url 'news_detail' item.pk %}" class="btn btn-sm btn-outline-primary">Читать полностью</a>
         </div>
-    {% empty %}
-        <p>Новостей пока нет.</p>
-    {% endfor %}
-</div>
+    </div>
+{% empty %}
+    <p>Новостей пока нет.</p>
+{% endfor %}
 {% endblock %}

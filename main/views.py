@@ -741,6 +741,23 @@ def news_list(request):
     news = News.objects.all()
     return render(request, 'main/news_list.html', {'news': news})
 
+def news_detail(request, pk):
+    try:
+        news = get_object_or_404(News, pk=pk)
+        context = {
+            'news': news
+        }
+        
+        # Если пользователь - преподаватель, добавляем это в контекст
+        if request.session.get('faculty_id'):
+            faculty = Faculty.objects.get(faculty_id=request.session['faculty_id'])
+            context['faculty'] = faculty
+            
+        return render(request, 'main/news_detail.html', context)
+    except Exception:
+        return render(request, 'error.html')
+
+
 def news_create(request):
     try:
         if request.session.get('faculty_id'):
