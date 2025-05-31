@@ -1,33 +1,39 @@
 {% extends 'index.html' %}
-
+{% block title %} Новости {% endblock title %}
 {% block content %}
 <div class="container mt-4">
     <h2>Новости</h2>
 
+    {% if request.session.faculty_id %}
+        <a href="{% url 'news_create' %}" class="btn btn-primary mb-3">
+            <i class="bi bi-plus-circle"></i> Создать новость
+        </a>
+    {% endif %}
 
-{% if request.session.faculty_id %}
-    <a href="{% url 'news_create' %}" class="btn btn-primary mb-3">Создать новость</a>
-{% endif %}
-
-{% for item in news %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">
-                <a href="{% url 'news_detail' item.pk %}" class="text-decoration-none">{{ item.title }}</a>
-            </h5>
-            <p class="card-text">{{ item.content|truncatewords:30 }}</p>
-            <p class="text-muted small">
-                 {{ item.created_at|date:"d.m.Y H:i" }} <!--| Автор: {{ item.faculty.name }} -->
-            </p>
-            
-            {% if request.session.faculty_id %}
-                <a href="{% url 'news_edit' item.pk %}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
-            {% endif %}
-            
-            <a href="{% url 'news_detail' item.pk %}" class="btn btn-sm btn-outline-primary">Читать полностью</a>
+    {% for item in news %}
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'news_detail' item.pk %}" class="text-decoration-none">
+                        {{ item.title }}
+                    </a>
+                </h5>
+                <!-- <p class="card-text">{{ item.content|truncatewords_html:30 }}</p> -->
+                <p class="text-muted small">
+                    {{ item.created_at|date:"d.m.Y H:i" }} | Автор: {{ item.faculty.name }}
+                </p>
+                {% if request.session.faculty_id %}
+                    <a href="{% url 'news_edit' item.pk %}" class="btn btn-sm btn-outline-secondary me-2">
+                        <i class="bi bi-pencil"></i> Редактировать
+                    </a>
+                {% endif %}
+                <a href="{% url 'news_detail' item.pk %}" class="btn btn-sm btn-outline-primary">
+                    Читать полностью
+                </a>
+            </div>
         </div>
-    </div>
-{% empty %}
-    <p>Новостей пока нет.</p>
-{% endfor %}
+    {% empty %}
+        <p>Новостей пока нет.</p>
+    {% endfor %}
+</div>
 {% endblock %}

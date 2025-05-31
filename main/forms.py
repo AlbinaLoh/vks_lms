@@ -57,6 +57,8 @@ class MaterialForm(forms.ModelForm):
 
 
 class NewsForm(forms.ModelForm):
+    content = forms.CharField(widget=FroalaEditor())
+
     class Meta:
         model = News
         fields = ['title', 'content']
@@ -64,20 +66,10 @@ class NewsForm(forms.ModelForm):
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите заголовок новости',
-                'maxlength': 255
-            }),
-            'content': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 6,
-                'placeholder': 'Введите текст новости',
-                'style': 'resize: vertical;'
+                'maxlength': 255,
             }),
         }
         labels = {
             'title': 'Заголовок',
             'content': 'Текст новости',
-        }
-        help_texts = {
-            'title': 'Кратко опишите тему новости (до 255 символов).',
-            'content': 'Полный текст новости.',
         }

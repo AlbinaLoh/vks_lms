@@ -208,7 +208,7 @@ class Material(models.Model):
 
 class News(models.Model):
     title = models.CharField("Заголовок", max_length=255)
-    content = models.TextField("Содержание")
+    content = FroalaField("Содержание")   # <-- вот здесь!
     created_at = models.DateTimeField("Дата создания", auto_now_add=True)
     updated_at = models.DateTimeField("Дата обновления", auto_now=True)
     faculty = models.ForeignKey('Faculty', on_delete=models.CASCADE, related_name='news', verbose_name="Автор")
