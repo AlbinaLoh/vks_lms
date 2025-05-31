@@ -23,7 +23,7 @@
       <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-mod">
          <div class="container-fluid">
             <a class="navbar-brand fw-bold fs-5 px-2 py-1" href="/admin" target="_blank" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="Access admin panel">eSLS</a>
+               data-bs-placement="bottom" title="Access admin panel">Центр развития НКО</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
                aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
             <span class=" navbar-toggler-icon"></span>
@@ -32,37 +32,53 @@
                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
                      <a class="nav-link active fw-bold" aria-current="page" href="{% block courses %}{% endblock courses %}"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Course home page">Dashboard</a>
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Course home page">Мои курсы</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link active fw-bold" aria-current="page" href="/departments"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Course home page">Departments</a>
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Course home page">Общая статистика по направлениям подготовки</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link active fw-bold" href="{% block allCourses %}{% endblock %}" data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" title="Show all courses">Courses</a>
+                        data-bs-placement="bottom" title="Show all courses">Список курсов</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link active fw-bold" href="{% url 'std_logout' %}" data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" title="Log out">Log out</a>
+                        data-bs-placement="bottom" title="Log out">Выйти</a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link active fw-bold" href="{% block profile %}{% endblock profile %}"
                         data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="Check your profile">{% block user %}{% endblock  %}</a>
                   </li>
+                  <li class="nav-item">
+                     <a class="nav-link active fw-bold" aria-current="page" 
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Course home page">Новости</a>
+                  </li>
                </ul>
                <form class="d-flex" action=" {% url 'search' %}" method="GET">
-                  <input id="searchIn" class="form-control me-2 searchbar" type="search" placeholder="Search courses" aria-label="Search"
+                  <input id="searchIn" class="form-control me-2 searchbar" type="search" placeholder="Запрос для поиска" aria-label="Search"
                      name="q">
-                  <button id="searchBtn" class="btn btn-outline-light" type="submit">Search</button>
+                  <button id="searchBtn" class="btn btn-outline-light" type="submit">Поиск</button>
                </form>
             </div>
          </div>
       </nav>
       <!-- Navbar Ends -->
-      {% block  content %}
-      {% endblock  %}
+
+   <main class="flex-grow-1">
+      {% block content %}
+      {% endblock %}
+   </main>
+
+            <!-- Footer Starts -->
+   <!-- <footer class="bg-dark text-light py-4 mt-auto">
+      <div class="container text-center">
+         <p class="mb-1">&copy; 2025 Центр развития НКО. Все права защищены.</p>
+         <p class="small">Контакты: <a href="mailto:info@nko-center.ru" class="text-decoration-none text-light">info@nko-center.ru</a> | Телефон: +7 (495) 123-45-67</p>
+      </div>
+   </footer> -->
+      <!-- Footer Ends -->
       <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>
    </body>
 </html>

@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %}Dashboard | eSLS {% endblock title %}
+{% block title %}Мои курсы  {% endblock title %}
 {% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
@@ -18,7 +18,7 @@
    <div class="container shadow-sm">
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active" aria-current="page">My Courses</a>
+            <li class="breadcrumb-item fw-bold"><a class="breadcrumb-item active" aria-current="page">Мои курсы </a>
             </li>
          </ol>
       </nav>
@@ -32,11 +32,11 @@
          <!-- individual course starts -->
          <div class="cd card text-center my-4 mx-4 courseAnim" style="width: 30rem !important;">
             <div class="card-header text-light">
-               Dept. of {{courses.department}}
+               Направление {{courses.department}}
             </div>
             <div class="card-body">
                <h5 class="card-title">{{courses.department}}-{{courses.code}} : {{courses.name}}</h5>
-               <a href="{% url 'faculty' courses.code %}" class="btn btn-outline-dark px-5">Enter</a>
+               <a href="{% url 'faculty' courses.code %}" class="btn btn-outline-dark px-5">Перейти</a>
             </div>
             <div class="card-footer text-light">
                <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">

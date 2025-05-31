@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-{% block title %} {{ course.name }} | eSLS {% endblock title %}
+{% block title %} {{ course.name }} {% endblock title %}
 {% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
@@ -28,7 +28,7 @@
    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
       <ol class="breadcrumb p-3">
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'facultyCourses' %}">My Courses</a></li>
+            href="{% url 'facultyCourses' %}">Мои курсы</a></li>
          <li class="breadcrumb-item fw-bold animate__animated animate__backInRight"><a class="breadcrumb-item active"
             aria-current="page">{{ course.name }}</a></li>
       </ol>
@@ -50,7 +50,7 @@
                      <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
                      <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                   </svg>
-                  Discussion
+                  Обсуждение
                </a>
             </li>
             <li class="border-bottom">
@@ -68,7 +68,7 @@
                      <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
                      <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                   </svg>
-                  Test
+                  Тест
                </a>
             </li>
          </ul>
@@ -79,7 +79,7 @@
    <div class="rounded p-3 m-3 shadow border border-top-0 border-end-0 border-bottom-0 border-primary border-5">
       <div class="animate__animated animate__zoomInDown d-flex justify-content-between border-bottom border-1 mb-2">
          <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/megaphone.png' %}"
-            alt="" style="height:1.5rem; vertical-align: text-bottom;"><span style="margin-right: 0.6rem;"></span>Announcement
+            alt="" style="height:1.5rem; vertical-align: text-bottom;"><span style="margin-right: 0.6rem;"></span>Анонс
          </h5>
          <a
             href="{% url 'addAnnouncement' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
@@ -97,7 +97,7 @@
                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                      <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                   </svg>
-                  <span style="vertical-align:middle">Delete</span> 
+                  <span style="vertical-align:middle">Удалить</span> 
                </button>
                <!-- Popup -->
                <div class="modal fade" id="announcement{{announcement.id}}" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -110,13 +110,13 @@
                            </button>
                         </div>
                         <div class="modal-body fs-6">
-                           Are you sure you want to delete this announcement?
+                           Вы точно хотите удалить этот анон?
                         </div>
                         <div class="modal-footer" style="border:none">
                            <button type="button" data-bs-dismiss="modal"
-                              class="btn btn-sm ">Cancel</button>
+                              class="btn btn-sm ">Отмена</button>
                            <a class="btn btn-sm btn-primary"
-                              href="{% url 'deleteAnnouncement' course.code announcement.id %}">Confirm</a>
+                              href="{% url 'deleteAnnouncement' course.code announcement.id %}">Удалить</a>
                         </div>
                      </div>
                   </div>
@@ -127,7 +127,7 @@
                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                   </svg>
-                  <span style="vertical-align:middle">Edit</span> 
+                  <span style="vertical-align:middle">Изменить</span> 
                </a>
             </div>
             <div class="add-announcement" style="color:grey;">
@@ -137,7 +137,7 @@
          <hr>
          <!-- individual announcement ends-->
          {% empty %}
-         <p class="fs-6 text-center text-muted">No announcement has been posted</p>
+         <p class="fs-6 text-center text-muted">В данный момент анонсов нет</p>
          {% endfor %}
       </div>
    </div>
@@ -146,7 +146,7 @@
    <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-end-0 border-danger border-5">
       <div class="animate__animated animate__zoomInLeft d-flex flex-row justify-content-between edit border-bottom border-1 mb-2">
          <h5 class="fw-bold assignmentCls" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
-            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Assignment</h5>
+            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Лекции</h5>
          <a style="height:2rem"
             href="{% url 'addAssignment' course.code %}">
          <img src="{% static 'images/icon/iconBlack.png' %}"
@@ -160,7 +160,7 @@
          {{assignment.title}}</a>
          <div class="d-flex justify-content-between">
             <div class="text-muted">
-               <p>Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
+               <p>Изучено : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
             </div>
             <div class="text-muted">
                {{assignment.post_date}}
@@ -168,15 +168,15 @@
          </div>
          <!-- individual assignment ends -->
          {% empty %}
-         <p class="text-center text-muted fs-6">No assignments given yet</p>
+         <p class="text-center text-muted fs-6">Лекции ещё не загружены</p>
          {% endfor %}
       </div>
       <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
          {% if assignments %}
-         <span class="mt-2" >Showing {{ assignments.count}} of {{course.assignment_set.count}}
-         {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
+         <span class="mt-2" >Просмотреть {{ assignments.count}} из {{course.assignment_set.count}}
+         {% if assignments.count == 1 %}лекция {% else %}лекции{% endif %}
          </span>
-         <a href="{% url 'allAssignments' course.code %}">Show all</a>
+         <a href="{% url 'allAssignments' course.code %}">Просмотреть все</a>
          {% endif %}
       </div>
    </div>
@@ -185,7 +185,7 @@
    <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
       <div class="d-flex flex-row justify-content-between edit border-bottom border-1 mb-2 animate__animated animate__zoomInUp">
          <h5 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
-            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Course Material</h5>
+            alt="" style="height:1.5rem; vertical-align: top"><span style="margin-right: 0.6rem;"></span>Учебные материалы</h5>
          <a
             href="{% url 'addCourseMaterial' course.code  %}"><img src="{% static 'images/icon/iconBlack.png' %}"
             alt="" height="32"></a>
@@ -195,7 +195,7 @@
          <!-- individual material starts -->
          <div class="fs-6 text-break mb-2">{% autoescape off %}{{material.description}}{% endautoescape %}</div>
          {% if  material.file %}
-         <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">File : {{material.file.name}}</span></a><br>
+         <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">Файл : {{material.file.name}}</span></a><br>
          {% endif %}
          <!-- Popup -->
          <div class="modal fade" id="materialDel{{material.id}}" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -207,13 +207,13 @@
                         aria-label="Close"></button>
                   </div>
                   <div class="modal-body fs-6">
-                     Are you sure you want to remove this item?
+                     Вы точно хотите удалить этот материал?
                   </div>
                   <div class="modal-footer" style="border:none">
                      <button type="button" class="btn btn-sm "
-                        data-bs-dismiss="modal">Cancel</button>
+                        data-bs-dismiss="modal">Отмена</button>
                      <a class="btn btn-sm btn-primary"
-                        href="{% url 'deleteCourseMaterial' course.code material.id %}">Confirm</a>
+                        href="{% url 'deleteCourseMaterial' course.code material.id %}">Продолжить</a>
                   </div>
                </div>
             </div>
@@ -225,7 +225,7 @@
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                </svg>
-               Remove
+               Удалить
             </button>
             <div style="color:grey;">
                {{material.post_date}}
@@ -233,7 +233,7 @@
          </div>
          <hr>
          {% empty %}
-         <p class="text-center text-muted fs-6">Course materials not available</p>
+         <p class="text-center text-muted fs-6">Материалы ещё не загружены</p>
          {% endfor %}
          <!-- individual material ends -->
       </div>

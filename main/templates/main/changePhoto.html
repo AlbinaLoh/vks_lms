@@ -21,7 +21,7 @@
                <form action="{% url 'changePhoto' %}" method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="text-center">
-                     <h5 class="mb-3 fw-bold">Change Profile Picture</h5>
+                     <h5 class="mb-3 fw-bold">Заменить фото профиля</h5>
                   </div>
                   <div class="my-3 text-center">
                      <img src="/media/{{student.photo}}" class="rounded-circle" alt="image" style="height: 10rem ; width:10rem">
@@ -34,7 +34,7 @@
                      <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                   <div class="text-center mt-3">
-                     <a href="{% url 'profile' student.student_id %}">Cancel</a>
+                     <a href="{% url 'profile' student.student_id %}">Отмена</a>
                   </div>
                </form>
                <p class="text-center mt-3"> <span class="text-muted">logged in as</span>  {{student.name}}</p>
