@@ -43,14 +43,14 @@
          <img src="/media/{{faculty.photo}}" class="rounded-circle" alt="image" style="height: 10rem ; width:10rem">
       </div>
       <div class="my-3">
-         <h5>Name : {{faculty.name}}</h5>
+         <h5>ФИО : {{faculty.name}}</h5>
          <h5>ID : <span class="mx-3 px-1"></span>{{faculty.faculty_id}}</h5>
-         <h5>Dept :<span class="mx-2"></span>{{faculty.department}}</h5>
+         <h5>Текущее направление подготовки:<span class="mx-2"></span>{{faculty.department}}</h5>
       </div>
    </div>
    <div class="d-flex justify-content-center">
       <a href="{% url 'changePasswordPrompt'%}" class="btn btn-sm btn-primary border my-2 mx-1">
-      Change Password
+      Изменить пароль
       </a>
       <a href="{% url 'changePhotoPrompt'%}" class="btn btn-sm btn-primary border my-2 mx-1">
       Change Profile Picture
