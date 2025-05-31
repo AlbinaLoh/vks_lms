@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Новости</h2>
+
+    {% if is_faculty %}
+    <a href="{% url 'news_create' %}" class="btn btn-primary mb-3">Создать новость</a>
+{% endif %}
+
+
+    {% for item in news %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.content|linebreaks }}</p>
+                <p class="text-muted small">
+                    {{ item.created_at|date:"d.m.Y H:i" }} | Автор: {{ item.faculty.user.get_full_name }}
+                </p>
+                {% if user.is_authenticated and user.faculty_id and item.faculty.pk == user.faculty_id %}
+                    <a href="{% url 'news_edit' item.pk %}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Новостей пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}
