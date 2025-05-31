@@ -61,6 +61,23 @@ class NewsForm(forms.ModelForm):
         model = News
         fields = ['title', 'content']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите заголовок'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'placeholder': 'Введите текст новости'}),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите заголовок новости',
+                'maxlength': 255
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 6,
+                'placeholder': 'Введите текст новости',
+                'style': 'resize: vertical;'
+            }),
+        }
+        labels = {
+            'title': 'Заголовок',
+            'content': 'Текст новости',
+        }
+        help_texts = {
+            'title': 'Кратко опишите тему новости (до 255 символов).',
+            'content': 'Полный текст новости.',
         }
