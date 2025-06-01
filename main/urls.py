@@ -54,4 +54,7 @@ urlpatterns = [
     path('news/edit/<int:pk>/', views.news_edit, name='news_edit'),
     path('news/<int:pk>/', views.news_detail, name='news_detail'),
     path('departments/export_students_statistics/', views.export_students_statistics, name='export_students_statistics'),
+    path('course/<str:course_code>/download_schedule/', views.download_schedule_excel, name='download_schedule_excel'),
+    path('my_requests/', views.my_requests, name='my_requests'),
+    path('course/<str:course_code>/submit_request/', views.submit_course_request, name='submit_course_request'),
 ]

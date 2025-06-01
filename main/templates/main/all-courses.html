@@ -26,6 +26,11 @@
          </ol>
       </nav>
    </div>
+   <!-- {% if not faculty %} -->
+   <a href="{% url 'my_requests' %}" class="btn btn-outline-primary mb-3">
+   Мои заявки на курсы
+   </a>
+   <!-- {% endif %} -->
    <!-- navigation links end -->
    <div class="row gy-5">
       {% if courses %}
@@ -46,7 +51,8 @@
                {% if not faculty %}
                {% comment %} if student {% endcomment %}
                {% if course not in enrolled%}
-               <a href="{% url 'access' course.code %}" class="btn btn-outline-dark"><span class="px-2">Access</span></a>
+               <div><a href="{% url 'submit_course_request' course.code %}" class="btn btn-success mb-3"> Подать заявку на курс </a></div>
+               <a href="{% url 'access' course.code %}" class="btn btn-outline-dark"><span class="px-2">Ввести ключ доступа</span></a>
                {% else %}
                <a href="{% url 'course' course.code %}" class="btn btn-outline-dark"><span
                   class="px-3">Перейти к курсу</span></a>

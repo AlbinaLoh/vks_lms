@@ -59,40 +59,9 @@
       </div>
        
 
-
-<div class="card mb-4">
-    <div class="card-header">
-        Ваше расписание занятий по курсу
-    </div>
-    <div class="card-body">
-        {% if attendance_list %}
-            <table class="table table-bordered table-hover align-middle text-center">
-                <thead>
-                    <tr>
-                        <th>Дата занятия</th>
-                        <th>Статус</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in attendance_list %}
-                        <tr>
-                            <td>{{ item.date|date:"d.m.Y" }}</td>
-                            <td>
-                                {% if item.attended %}
-                                    <span class="badge bg-success">Посещено</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">Не посещено</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>Занятия ещё не запланированы.</p>
-        {% endif %}
-    </div>
-</div>
+      <a href="{% url 'download_schedule_excel' course.code %}" id="downloadBtn" class="btn btn-primary mb-3">
+      Скачать расписание
+      </a>
 
       <!-- course name ends -->
       <!-- announcement section starts -->
@@ -177,5 +146,16 @@
    var materialName = document.getElementById("materialName").innerHTML;
    var materialName = materialName.replace("materials/", "");
    document.getElementById("materialName").innerHTML = materialName;
+
+   // document.addEventListener('DOMContentLoaded', function() {
+   //    const btn = document.getElementById('downloadBtn');
+   //    btn.addEventListener('click', function() {
+   //       btn.classList.add('neon-glow');
+   //       // Подсветка будет гореть 5 секунд, потом уберётся
+   //       setTimeout(() => {
+   //       btn.classList.remove('neon-glow');
+   //       }, 5000);
+   //    });
+   // });
 </script>
 {% endblock %}

@@ -1,15 +1,17 @@
 import datetime
 import openpyxl
+from openpyxl import Workbook
 from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
-from .models import Student, Course, Announcement, Assignment, Submission, Material, Faculty, Department, News
+from .models import Student, Course, Announcement, Assignment, Submission, Material, Faculty, Department, News, CourseRequest
 from django.template.defaulttags import register
 from django.db.models import Count, Q, Sum
 from django.http import HttpResponseRedirect
 from .forms import AnnouncementForm, AssignmentForm, MaterialForm, NewsForm
 from django import forms
 from django.core import validators
+from datetime import date as dt_date
 
 from quiz.models import Quiz, StudentAnswer
 from attendance.models import Attendance
@@ -901,28 +903,76 @@ def export_students_statistics(request):
     wb.save(response)
     return response
 
-def course_detail(request, course_code):
-    # Получаем student_id из сессии
+def download_schedule_excel(request, course_code):
     student_id = request.session.get('student_id')
     if not student_id:
-        return redirect('std_login')
+        return HttpResponse("Пожалуйста, войдите в систему как студент.", status=403)
 
-    # Получаем объекты student и course
     student = get_object_or_404(Student, student_id=student_id)
     course = get_object_or_404(Course, code=course_code)
 
-    # Получаем все уникальные даты занятий по курсу
     all_dates = Attendance.objects.filter(course=course).values_list('date', flat=True).distinct().order_by('date')
+    student_attendance = Attendance.objects.filter(course=course, student=student)
+    attendance_dict = {att.date: att.status for att in student_attendance}
 
-    # Для каждой даты проверяем, посещал ли студент занятие (status=1)
-    attendance_list = []
-    for date in all_dates:
-        attended = Attendance.objects.filter(course=course, student=student, date=date, status=1).exists()
-        attendance_list.append({'date': date, 'attended': attended})
+    today = datetime.date.today()
 
-    context = {
-        'course': course,
-        'student': student,
-        'attendance_list': attendance_list,
-    }
-    return render(request, 'main/course.html', context)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Расписание посещаемости"
+
+    ws.append(["Курс:", f"{course.department}-{course.code} : {course.name}"])
+    ws.append(["Количество занятий:", len(all_dates)])
+    ws.append([])
+
+    ws.append(["Дата занятия", "Статус посещения"])
+
+    for d in all_dates:
+        status_code = attendance_dict.get(d)
+        if status_code is None:
+            if d > today:
+                status = "Ещё не проведено"
+            else:
+                status = "Не посещал"
+        elif status_code:
+            status = "Посетил"
+        else:
+            status = "Не посетил"
+
+        ws.append([d.strftime("%d.%m.%Y"), status])
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    filename = f"timesheet_{course.code}_{student.student_id}.xlsx"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    wb.save(response)
+    return response
+
+def my_requests(request):
+    student_id = request.session.get('student_id')
+    if not student_id:
+        return redirect('std_login')
+    student = get_object_or_404(Student, student_id=student_id)
+    requests = CourseRequest.objects.filter(student=student).select_related('course').order_by('-created_at')
+    return render(request, 'main/my_requests.html', {'requests': requests, 'student': student})
+
+def submit_course_request(request, course_code):
+    student_id = request.session.get('student_id')
+    if not student_id:
+        messages.error(request, "Пожалуйста, войдите в систему.")
+        return redirect('std_login')
+
+    student = get_object_or_404(Student, student_id=student_id)
+    course = get_object_or_404(Course, code=course_code)
+
+    # Проверяем, есть ли уже заявка на этот курс
+    existing_request = CourseRequest.objects.filter(student=student, course=course).first()
+    if existing_request:
+        messages.info(request, "Вы уже подали заявку на этот курс.")
+    else:
+        CourseRequest.objects.create(student=student, course=course)
+        messages.success(request, "Заявка успешно подана.")
+
+    return redirect('my_requests')

@@ -7,6 +7,8 @@ class Student(models.Model):
     student_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, null=False)
     email = models.EmailField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    organization = models.CharField(max_length=255, blank=True, null=True)
     password = models.CharField(max_length=255, null=False)
     role = models.CharField(
         default="Student", max_length=100, null=False, blank=True)
@@ -91,6 +93,16 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+STATUS_CHOICES = (
+    ('pending', 'В ожидании'),
+    ('approved', 'Одобрено'),
+    ('rejected', 'Отклонено'),
+)
+class CourseRequest(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Announcement(models.Model):
     course_code = models.ForeignKey(

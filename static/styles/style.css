@@ -1,6 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap");
 
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 5px #0ff,
+      0 0 10px #0ff,
+      0 0 20px #0ff,
+      0 0 40px #0ff;
+  }
+  50% {
+    box-shadow:
+      0 0 10px #0ff,
+      0 0 20px #0ff,
+      0 0 30px #0ff,
+      0 0 50px #0ff;
+  }
+}
+
+#downloadBtn {
+  transition: box-shadow 0.3s ease;
+}
+
+#downloadBtn:hover {
+  animation: neonPulse 1.5s infinite alternate;
+  color: #0ff; /* Можно добавить свечение текста */
+  border-color: #0ff; /* Если у кнопки есть рамка */
+}
 * {
   font-family: "Inter", sans-serif;
   box-sizing: border-box;
