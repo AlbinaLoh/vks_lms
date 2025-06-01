@@ -9,6 +9,12 @@ from django.db.models import Count, Sum, F, FloatField, Q, Prefetch
 from django.db.models.functions import Cast
 
 
+from attendance.models import Attendance
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseForbidden
+
+
+
 def quiz(request, code):
     try:
         course = Course.objects.get(code=code)
@@ -128,17 +134,34 @@ def startQuiz(request, code, quiz_id):
     if is_student_authorised(request, code):
         course = Course.objects.get(code=code)
         quiz = Quiz.objects.get(id=quiz_id)
+        student = Student.objects.get(student_id=request.session['student_id'])
+
+        error_message = check_full_attendance(student, course)
+        if error_message:
+            return render(request, 'quiz/portalStdNew.html', {
+                'error_message': error_message,
+                'course': course,
+                'quiz': quiz,
+                'student': student,
+                'questions': [],
+                'total_questions': 0,
+            })
+
         questions = Question.objects.filter(quiz=quiz)
         total_questions = questions.count()
-
-        marks = 0
-        for question in questions:
-            marks += question.marks
+        marks = sum(question.marks for question in questions)
         quiz.total_marks = marks
 
-        return render(request, 'quiz/portalStdNew.html', {'course': course, 'quiz': quiz, 'questions': questions, 'total_questions': total_questions, 'student': Student.objects.get(student_id=request.session['student_id'])})
+        return render(request, 'quiz/portalStdNew.html', {
+            'course': course,
+            'quiz': quiz,
+            'questions': questions,
+            'total_questions': total_questions,
+            'student': student
+        })
     else:
         return redirect('std_login')
+
 
 def studentAnswer(request, code, quiz_id):
     if is_student_authorised(request, code):
@@ -253,5 +276,28 @@ def quizSummary(request, code, quiz_id):
 
     else:
         return redirect('std_login')
+
+
+def check_full_attendance(student, course):
+    course_dates = Attendance.objects.filter(course=course).values_list('date', flat=True).distinct()
+    total_classes = course_dates.count()
+
+    if total_classes == 0:
+        return "В курсе нет занятий, доступ к тесту запрещён."
+
+    attended_classes = Attendance.objects.filter(
+        course=course,
+        student=student,
+        status=True  # BooleanField
+    ).values_list('date', flat=True).distinct().count()
+
+    if attended_classes < total_classes:
+        return "Вы не можете проходить тест, так как не посетили все занятия курса."
+
+    return None
+
+
+
+
 
 

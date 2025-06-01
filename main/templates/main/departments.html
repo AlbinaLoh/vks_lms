@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %} Departments | eSLS {% endblock title %}
+{% block title %} Список направлений {% endblock title %}
 {% block profile %}
 {% if faculty  %} {% url 'profile' faculty.faculty_id %}
 {% else %} {% url 'profile' student.student_id %}
@@ -25,21 +25,21 @@
    <div class="container shadow-sm">
       <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
          <ol class="breadcrumb p-3">
-            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">All Departments</li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Все направления</li>
          </ol>
       </nav>
    </div>
    <!-- navigation links end -->
       {% if deps %}
-      <span class="text-muted fst-italic">Showing all departments</span>
+      <span class="text-muted fst-italic">Просмотр общей информации</span>
       <table class="table align-middle mb-0 bg-white text-center my-3 shadow rounded">
          <thead class="bg-light">
             <tr>
-               <th>Name</th>
-               <th>Dept. ID</th>
-               <th>No. of Students</th>
-               <th>Total Faculty</th>
-               <th>Total Courses</th>
+               <th>Наименование</th>
+               <th>Код направления</th>
+               <th>Количество студентов</th>
+               <th>Количество преподавателей</th>
+               <th>Количество курсов</th>
             </tr>
          </thead>
          <tbody>
@@ -64,8 +64,15 @@
             {% endfor %}
          </tbody>
       </table>
+      <div>
+         {% if request.session.faculty_id %}
+    <a href="{% url 'export_students_statistics' %}" class="btn btn-success mb-3">
+        <i class="bi bi-file-earmark-excel"></i> Выгрузить статистику по студентам (Excel)
+    </a>
+         {% endif %}
+      </div>
       {% else %}
-   <div class="text-center h4 text-secondary">No Departments to show</div>
+   <div class="text-center h4 text-secondary">Направления подготовки ещё не созданы</div>
    {% endif %}
 </div>
 {% endblock  %}

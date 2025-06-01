@@ -53,5 +53,5 @@ urlpatterns = [
     path('news/create/', views.news_create, name='news_create'),
     path('news/edit/<int:pk>/', views.news_edit, name='news_edit'),
     path('news/<int:pk>/', views.news_detail, name='news_detail'),
-
+    path('departments/export_students_statistics/', views.export_students_statistics, name='export_students_statistics'),
 ]

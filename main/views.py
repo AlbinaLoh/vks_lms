@@ -1,14 +1,19 @@
 import datetime
+import openpyxl
+from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from .models import Student, Course, Announcement, Assignment, Submission, Material, Faculty, Department, News
 from django.template.defaulttags import register
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 from django.http import HttpResponseRedirect
 from .forms import AnnouncementForm, AssignmentForm, MaterialForm, NewsForm
 from django import forms
 from django.core import validators
 
+from quiz.models import Quiz, StudentAnswer
+from attendance.models import Attendance
+from collections import defaultdict
 
 from django import forms
 
@@ -813,3 +818,111 @@ def news_edit(request, pk):
         return redirect('std_login')
     except Exception:
         return render(request, 'error.html')
+    
+
+
+
+
+
+def export_students_statistics(request):
+    faculty_id = request.session.get('faculty_id')
+    if not faculty_id:
+        return redirect('std_login')
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Статистика студентов"
+
+    # Заголовки с дополнительными столбцами
+    ws.append([
+        "Направление",
+        "Курс",
+        "Код курса",
+        "ФИО студента",
+        "E-mail студента",
+        "Дата первой лекции (первого задания)",
+        "Оценка за тест",
+        "Дата сдачи теста",
+        "Посещено/Всего"
+    ])
+
+    courses = Course.objects.filter(faculty_id=faculty_id)
+    for course in courses:
+        students = course.students.all()
+
+        first_assignment = Assignment.objects.filter(course_code=course).order_by('datetime').first()
+        first_assignment_date = first_assignment.datetime.strftime("%d.%m.%Y %H:%M") if first_assignment else ""
+
+        # Берём первый тест курса
+        quiz = Quiz.objects.filter(course=course).order_by('id').first()
+
+        # Подсчёт общего количества занятий по курсу
+        total_classes = Attendance.objects.filter(course=course).values_list('date', flat=True).distinct().count()
+
+        for student in students:
+            department_name = student.department.name if student.department else ""
+
+            # Подсчёт оценки и даты сдачи теста
+            score = ""
+            submit_date = ""
+            if quiz:
+                answers = StudentAnswer.objects.filter(quiz=quiz, student=student)
+                score_sum = answers.aggregate(total_marks=Sum('marks'))['total_marks'] or 0
+                score = str(score_sum)
+
+                last_answer = answers.order_by('-created_at').first()
+                if last_answer and last_answer.created_at:
+                    submit_date = last_answer.created_at.strftime("%d.%m.%Y %H:%M")
+
+            # Подсчёт посещаемости
+            attended_classes = Attendance.objects.filter(
+                course=course,
+                student=student,
+                status=True  # предполагается BooleanField
+            ).values_list('date', flat=True).distinct().count()
+            attendance_stat = f"{attended_classes}/{total_classes}" if total_classes else "0/0"
+
+            ws.append([
+                department_name,
+                course.name,
+                course.code,
+                student.name,
+                student.email,
+                first_assignment_date,
+                score,
+                submit_date,
+                attendance_stat,
+            ])
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename="stat.xlsx"'
+    wb.save(response)
+    return response
+
+def course_detail(request, course_code):
+    # Получаем student_id из сессии
+    student_id = request.session.get('student_id')
+    if not student_id:
+        return redirect('std_login')
+
+    # Получаем объекты student и course
+    student = get_object_or_404(Student, student_id=student_id)
+    course = get_object_or_404(Course, code=course_code)
+
+    # Получаем все уникальные даты занятий по курсу
+    all_dates = Attendance.objects.filter(course=course).values_list('date', flat=True).distinct().order_by('date')
+
+    # Для каждой даты проверяем, посещал ли студент занятие (status=1)
+    attendance_list = []
+    for date in all_dates:
+        attended = Attendance.objects.filter(course=course, student=student, date=date, status=1).exists()
+        attendance_list.append({'date': date, 'attended': attended})
+
+    context = {
+        'course': course,
+        'student': student,
+        'attendance_list': attendance_list,
+    }
+    return render(request, 'main/course.html', context)
