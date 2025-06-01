@@ -69,7 +69,7 @@
       {% endif %}
       <label id="timer" class="p-2 fw-bold" for="">Time Remaining : <span id="timeRemain" class="fw-semibold"></span></label><br>
    </div>
-   {% if time < assignment.deadline and not submission.file %}
+   {% if time assignment.deadline and not submission.file %}
    <form action="{% url 'addSubmission' course.code assignment.id %}" method="POST" enctype="multipart/form-data"
       id="gradeForm" name="gradeForm">
       {% csrf_token %}
@@ -108,10 +108,9 @@
    }, 1000); 
    {% if submission.file %}
    $(document).ready(function(){
-      $('#timer').hide(); 
-   }
-   );
-   {% endif %} 
+      $('#timer').hide();
+   });
+   {% endif %}
    
    let assignment = document.querySelectorAll('.assignment-info');
    anime({

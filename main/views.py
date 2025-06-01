@@ -563,21 +563,33 @@ def departments(request):
 
 def access(request, code):
     if request.session.get('student_id'):
-        course = Course.objects.get(code=code)
-        student = Student.objects.get(student_id=request.session['student_id'])
+        course = get_object_or_404(Course, code=code)
+        student = get_object_or_404(Student, student_id=request.session['student_id'])
+        
         if request.method == 'POST':
-            if (request.POST['key']) == str(course.studentKey):
+            if request.POST.get('key') == str(course.studentKey):
                 student.course.add(course)
                 student.save()
+                
+                # Обновляем статус заявки в CourseRequest на 'approved'
+                CourseRequest.objects.filter(
+                    student=student,
+                    course=course,
+                    status='pending'  # обновляем только заявки в ожидании
+                ).update(status='approved')
+                
                 return redirect('/my/')
             else:
                 messages.error(request, 'Invalid key')
                 return HttpResponseRedirect(request.path_info)
         else:
             return render(request, 'main/access.html', {'course': course, 'student': student})
-
     else:
         return redirect('std_login')
+
+
+
+
 
 
 def search(request):
@@ -741,13 +753,24 @@ def guestFaculty(request):
     except:
         return redirect('std_login')
 
-
-
-
 def news_list(request):
+    student_id = request.session.get('student_id')
+    student = None
+    faculty = None
+    if student_id:
+        student = Student.objects.filter(student_id=student_id).first()
+    else:
+        faculty_id = request.session.get('faculty_id')
+        if faculty_id:
+            faculty = Faculty.objects.filter(faculty_id=faculty_id).first()
     news = News.objects.all()
-    return render(request, 'main/news_list.html', {'news': news})
-
+    return render(request, 'main/news_list.html', {
+        'student': student,
+        'faculty': faculty,
+        'news': news,
+    })
+    
+    return render(request, 'main/news_list.html', {'student': student, 'news': news})
 def news_detail(request, pk):
     try:
         news = get_object_or_404(News, pk=pk)
