@@ -12,6 +12,7 @@ from .forms import AnnouncementForm, AssignmentForm, MaterialForm, NewsForm
 from django import forms
 from django.core import validators
 from datetime import date as dt_date
+from django.utils import timezone
 
 from quiz.models import Quiz, StudentAnswer
 from attendance.models import Attendance
@@ -355,6 +356,25 @@ def allAssignments(request, code):
     else:
         return redirect('std_login')
 
+def assignment_detail(request, course_code, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    course = get_object_or_404(Course, code=course_code)
+    student = get_object_or_404(Student, student_id=request.session.get('student_id'))
+    # Получение submission для этого assignment и студента
+    submission = Submission.objects.filter(assignment=assignment, student=student).first()
+    
+    # ВАЖНО: вычисляем, открыт ли дедлайн (True, если дедлайн ещё не истёк)
+    is_before_deadline = assignment.deadline > timezone.now()
+    
+    context = {
+        'assignment': assignment,
+        'course': course,
+        'student': student,
+        'submission': submission,
+        'is_before_deadline': is_before_deadline,
+        # ... другие переменные, если есть
+    }
+    return render(request, 'main/assignment_detail.html', context)
 
 def allAssignmentsSTD(request, code):
     if is_student_authorised(request, code):
@@ -769,7 +789,7 @@ def news_list(request):
         'faculty': faculty,
         'news': news,
     })
-    
+   
     return render(request, 'main/news_list.html', {'student': student, 'news': news})
 def news_detail(request, pk):
     try:

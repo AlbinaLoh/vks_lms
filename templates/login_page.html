@@ -24,19 +24,19 @@
                      <figure><img src="{% static 'images/login-bg.jpg' %}" alt="sing up image"></figure>
                   </div>
                   <div class="signin-form">
-                     <h2 class="form-title">Вход</h2>
+                     <h2 class="form-title">Авторизация зарегистрированных пользователей</h2>
                      <form method="POST" class="register-form" id="login-form">
                            {% csrf_token %}
-                           <div class="form-group">
-                              <label for="{{ form.id.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">person</span></label>
+                           <div class="form-group" >
+                              <label for="{{ form.id.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">код</span></label>
                               {{ form.id }}
                            </div>
                            <div class="form-group">
-                              <label for="{{ form.password.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">lock</span></label>
+                              <label for="{{ form.password.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">пароль</span></label>
                               {{ form.password }}
                            </div>
                            <div class="d-grid">
-                              <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                              <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Вход</button>
                            </div>
                      </form>
                      <div class="d-flex justify-content-around flex-wrap">
@@ -44,7 +44,7 @@
                            <div class="dropdown">
                               <a class="dropdown-toggle" id="dropdownMenuButton1"
                                  data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                              Sign in as Guest
+                              Выберите форму авторизации
                               </a>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                  <li><a class="dropdown-item" href="/student">Обучающийя</a></li>
@@ -53,7 +53,7 @@
                            </div>
                         </div>
                         <div class="">
-                           <a href="/admin" target="_blank">Sign in as Admin</a>
+                           <a href="/admin" target="_blank">Предварительная регистрация</a>
                         </div>
                      </div>
                      {% if error_messages %}

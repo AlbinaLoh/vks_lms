@@ -23,7 +23,7 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'course' course.code %}">{{ course.name }}</a></li>
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'myQuizzes' course.code %}">Tests</a></li>
+               href="{% url 'myQuizzes' course.code %}">Тесты</a></li>
                <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">{{quiz.title}}</li>
             </ol>
          </nav>
@@ -46,7 +46,7 @@
                   <p class="fs-6"><span class="material-symbols-outlined inline-icons me-2">
                      timelapse
                      </span>Duration : <span class="fw-bold">{{quiz.duration}} Hours</span></p>
-                  <p class ="animate__animated animate__heartBeat fs-2 fw-bold text-success timer" id="start">Started!</p>
+                  <p class ="animate__animated animate__heartBeat fs-2 fw-bold text-success timer" id="start">Начать!</p>
                   {% comment %}starting timer{% endcomment %}
             <div class="container fs-2 d-flex flex-column" id="StartdaysSectionDV">
                <div class="text-center fs-6 d-inline-block fw-bold">

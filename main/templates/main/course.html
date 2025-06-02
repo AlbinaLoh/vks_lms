@@ -95,22 +95,22 @@
             <a class="fw-bold"
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="d-flex justify-content-between">
-               <p style="font-size:15px"> Due Date : {{ assignment.due_date}} </p>
+               <p style="font-size:15px"> Дата начала : {{ assignment.due_date}} </p>
                <div  style="color:grey;">
                   {{assignment.post_date}}
                </div>
             </div>
             <!-- individual assignment ends -->
             {% empty %}
-            <p class="text-center text-muted fs-6">No assignments given yet</p>
+            <p class="text-center text-muted fs-6">Ничего ещё не добавлено</p>
             {% endfor %}
          </div>
          {% if assignments %}
          <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
-            <span class="mt-2">Showing {{ assignments.count}} of {{course.assignment_set.count}}
-            {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}
+            <span class="mt-2">Просмотреть {{ assignments.count}} of {{course.assignment_set.count}}
+            {% if assignments.count == 1 %}из {% else %}лекции{% endif %}
             </span>
-            <a class="fs-6" href=" {% url 'student-assignments' course.code %} ">Show all</a>
+            <a class="fs-6" href=" {% url 'student-assignments' course.code %} ">Просмотреть все</a>
          </div>
          {% endif %}
       </div>
@@ -119,7 +119,7 @@
       <div class="rounded p-3 m-3 shadow border border-top-0 border-bottom-0 border-warning border-end-0 border-5" id="material">
          <!-- section title -->
          <div class="fw-bold animate__animated animate__zoomInDown fs-5 text-center border-bottom border-1 mb-2 py-2" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/folder.png' %}"
-            alt="" style="height:1.5rem;vertical-align: text-top"><span style="margin-right: 0.6rem;"></span>Course Material</div>
+            alt="" style="height:1.5rem;vertical-align: text-top"><span style="margin-right: 0.6rem;"></span>Учебные материалы</div>
          <!-- section title ends -->
          <div>
             {% for material in materials  %}
@@ -127,14 +127,14 @@
             <p>{% autoescape off %}{{ material.description }}{% endautoescape %}</p>
             <div class="d-flex justify-content-between text-break">
                {% if material.file %}
-               <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">File : {{material.file.name}}</span></a><br>
+               <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">Файл : {{material.file.name}}</span></a><br>
                {% endif %}
                <div class="text-muted">
                   {{material.post_date}}
                </div>
             </div>
             {% empty %}
-            <p class="text-center text-muted fs-6">Course materials not available</p>
+            <p class="text-center text-muted fs-6">Ничего ещё не добавлено</p>
             {% endfor %}
             <!-- individual material ends -->
          </div>

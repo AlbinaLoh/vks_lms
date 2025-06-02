@@ -77,7 +77,7 @@
             <th scope="col">ID</th>
             <th scope="col">Отсутствие</th>
             <th scope="col">Присутствие</th>
-            <th scope="col" colspan="2">Attendance</th>
+            <th scope="col" colspan="2">Отметка о посещении</th>
          </tr>
       </thead>
       <tbody class="table-group-divider">
@@ -94,13 +94,13 @@
                <td >
                   <div class="form-check form-check-inline">
                      <input class="form-check-input" type="radio" name="{{attendance.student.student_id}}" id="inlineRadio1{{forloop.counter}}" value="1">
-                     <label class="form-check-label" for="inlineRadio1{{forloop.counter}}">Present</label>
+                     <label class="form-check-label" for="inlineRadio1{{forloop.counter}}">Присутствовал</label>
                   </div>
                </td>
                <td>
                   <div class="form-check form-check-inline">
                      <input class="form-check-input" type="radio" name="{{attendance.student.student_id}}" id="inlineRadio2{{forloop.counter}}" value="0">
-                     <label class="form-check-label" for="inlineRadio2{{forloop.counter}}">Absent</label>
+                     <label class="form-check-label" for="inlineRadio2{{forloop.counter}}">Отсутствовал</label>
                   </div>
                </td>
             </tr>
@@ -114,8 +114,8 @@
    <div class="d-flex flex-row-reverse p-2 border rounded" style="background-color: rgb(250, 250, 250);">
    <span>
    </span> 
-   <a href=" {% url 'faculty' course.code %}" class="btn btn-sm btn-danger">Discard</a>
-   <button type="submit" class="btn btn-sm btn-primary px-3 mx-1">Save</button>
+   <a href=" {% url 'faculty' course.code %}" class="btn btn-sm btn-danger">Выйти</a>
+   <button type="submit" class="btn btn-sm btn-primary px-3 mx-1">Сохранить</button>
    </form>
    </div>
 </div>

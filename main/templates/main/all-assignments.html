@@ -24,7 +24,7 @@
             </li>
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
-            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Assignment</li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Лекции</li>
          </ol>
       </nav>
    </div>
@@ -39,7 +39,7 @@
       <div class="course-section p-3 m-3 shadow">
          <div class="d-flex flex-row justify-content-between edit">
             <h4 class="fw-bold" style="color: rgb(10, 10, 48);"><img src="{% static 'images/icon/open-book.png' %}"
-               alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Assignment</h4>
+               alt="" style="height:1.5rem"><span style="margin-right: 0.6rem;"></span>Лекции</h4>
             <a style="height:2rem"
                href="{% url 'addAssignment' course.code %}">
             <img src="{% static 'images/icon/iconBlack.png' %}"
@@ -53,20 +53,20 @@
             <a class="text-bold fs-6" href="{% url 'submission' course.code assignment.id %}">
             {{assignment.title}}</a>
             <div class="d-flex justify-content-between align-items-center">
-               <p style="margin-bottom:0;" class="text-muted">Submitted : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
+               <p style="margin-bottom:0;" class="text-muted">Обучающихся изучило : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
                <p class="fs-6 text-muted" style="margin-bottom:0;">
                   {{assignment.due_date}}
                </p>
             </div>
-            <p style="margin-bottom:0;">Submission ends : {{ assignment.due_date }}</p>
+            <p style="margin-bottom:0;">Дата окончания для изучения : {{ assignment.due_date }}</p>
             <hr>
             <!-- individual assignment ends -->
             {% empty %}
-            <h6 style="text-align:center">No assignments given yet</h6>
+            <h6 style="text-align:center">Лекции ещё не созданы</h6>
             {% endfor %}
          </div>
          <div class="text-center fs-6">
-            <p>Showing {{ assignments.count}} of {{course.assignment_set.count}} {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}</p>
+            <p>Просмотреть {{ assignments.count}} из {{course.assignment_set.count}} {% if assignments.count == 1 %}лекцию {% else %}лекций{% endif %}</p>
          </div>
       </div>
       <!-- assignment section ends -->

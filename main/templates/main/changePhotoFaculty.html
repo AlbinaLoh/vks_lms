@@ -5,7 +5,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Change Profile Picture</title>
+      <title>Заменить фото профиля</title>
       <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/apple-touch-icon.png' %}">
       <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/favicon-32x32.png' %}">
       <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/favicon-16x16.png' %}">
@@ -21,23 +21,23 @@
                <form action="{% url 'changePhotoFaculty' %}" method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="text-center">
-                     <h5 class="mb-3 fw-bold">Change Profile Picture</h5>
+                     <h5 class="mb-3 fw-bold">Заменить фото профиля</h5>
                   </div>
                   <div class="my-3 text-center">
                      <img src="/media/{{faculty.photo}}" alt="image" class="rounded-circle" style="height: 10rem ; width:10rem">
                   </div>
                   <div class="mb-3">
-                     <label for="photo" class="form-label ">Photo</label>
+                     <label for="photo" class="form-label ">Фото</label>
                      <input type="file" class="form-control" id="photo" name="photo" required>
                   </div>
                   <div class="d-grid">
-                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <button type="submit" class="btn btn-primary">Подтвердить</button>
                   </div>
                   <div class="text-center mt-3">
-                     <a href="{% url 'profile' faculty.faculty_id %}">Cancel</a>
+                     <a href="{% url 'profile' faculty.faculty_id %}">Отменить</a>
                   </div>
                </form>
-               <p class="text-center mt-3"> <span class="text-muted">logged in as</span>  {{faculty.name}}</p>
+               <p class="text-center mt-3"> <span class="text-muted">Пользователь</span>  {{faculty.name}}</p>
                {% if messages %}
                <div class="alert alert-danger mt-3" role="alert">
                   {% for message in messages %}

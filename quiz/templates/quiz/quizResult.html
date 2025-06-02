@@ -23,7 +23,7 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'course' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'myQuizzes' course.code %}">Tests</a></li>
+            href="{% url 'myQuizzes' course.code %}">Тесты</a></li>
          <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">{{quiz.title}}</li>
       </ol>
    </nav>
@@ -33,39 +33,39 @@
    <div class="shadow-sm px-3 pt-3 rounded border text-light animate__animated animate__fadeInDown" style="background: linear-gradient(270deg, #00d2ff 0%, #3a47d5 100%);">
       <div class="row">
          <div class="col-md-6">
-            <p class=" fw-bold fs-5"> {{quiz.title}} Summary</p>
+            <p class=" fw-bold fs-5"> {{quiz.title}} Рекомендация</p>
             <p class="text-light">
                {{quiz.description}}
             </p>
             <p> <span class="material-symbols-outlined inline-icons me-2">
                format_list_numbered
-               </span>Total Questions : <span class="fw-bold">{{quiz.total_questions}}</span>
+               </span>Количество вопросов : <span class="fw-bold">{{quiz.total_questions}}</span>
             </p>
             <p><span class="material-symbols-outlined inline-icons me-2">
                military_tech
-               </span> Points : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span>
+               </span> Максимальная оценка : <span class="fw-bold">{{quiz.total_marks_obtained}} / {{ quiz.total_marks}}</span>
             </p>
             <p> <span class="material-symbols-outlined inline-icons me-2">
                timer
-               </span> Time taken : <span id="timetaken" class="fw-bold"></span>
+               </span> Времени дано : <span id="timetaken" class="fw-bold"></span>
             </p>
          </div>
          <div class="col-md-6">
             <p><span class="material-symbols-outlined inline-icons me-2">
                history
-               </span>Started : <span class="fw-bold">{{quiz.starts}}</span>
+               </span>Начало : <span class="fw-bold">{{quiz.starts}}</span>
             </p>
             <p><span class="material-symbols-outlined inline-icons me-2">
                timer_off
-               </span>Ended : <span class="fw-bold">{{quiz.ends}}</span>
+               </span>Окончание : <span class="fw-bold">{{quiz.ends}}</span>
             </p>
             <p> <span class="material-symbols-outlined inline-icons me-2">
                timelapse
-               </span>Duration : <span class="fw-bold">{{ quiz.duration}}</span>
+               </span>Тест был открыт : <span class="fw-bold">{{ quiz.duration}}</span>
             </p>
             <P><span class="material-symbols-outlined inline-icons me-2">
                alarm_on
-               </span>Submitted on : {{quiz.submission_time}}
+               </span>Дата закрытия : {{quiz.submission_time}}
             </P>
          </div>
       </div>
@@ -75,9 +75,9 @@
       <div>
          <div class="d-flex justify-content-between mb-3">
             <div class="fw-bold">
-               <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} marks
+               <span><span class="fw-bold fs-5">{{forloop.counter}}.</span> <span class="me-3"> {{question.question}} </span>{{question.marks}} баллов
             </div>
-            {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Correct </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Incorrect </span>  {% endif %} 
+            {% if question.student_answer == question.answer  %} <span class="text-success fw-bold"> <img class="mb-1" height ="18" src="{% static 'images/icon/tick.png' %}" alt=""> Верно </span> {% else %} <span class="text-danger fw-bold"> <img height ="16" class="mb-1" src="{% static 'images/icon/cross.png' %}" alt=""> Неверно </span>  {% endif %} 
          </div>
          <div>
             <p {% if question.student_answer == question.answer and question.answer == 'A' %} class="alert alert-success fw-bold" {% elif question.student_answer != question.answer and question.student_answer == 'A' %} class="alert alert-danger fw-bold" {% else %} class="alert alert-light border" {% endif %} style="padding: 0.60rem !important">A : {{question.option1}} </p>
@@ -88,15 +88,15 @@
       </div>
       <div>
          {% if  not question.student_answer %}
-         <span class="fw-bold" style="font-size:15px"> You did not answer!</span>
+         <span class="fw-bold" style="font-size:15px"> Вы не ответили!</span>
          {% endif %}
       </div>
       <div style="font-size: 14px;">
-         Correct answer is <span class="fw-bold "> {{ question.answer }} : {{question.get_answer}}</span>
+         Верный ответ <span class="fw-bold "> {{ question.answer }} : {{question.get_answer}}</span>
       </div>
       {% if question.explanation %}
       <div class="mt-2 bg-warning bg-opacity-10 p-2 border-start border-2 border-warning" style="font-size:smaller">
-         <span class="fw-bold">Explanation : </span>{{question.explanation}}
+         <span class="fw-bold">Объяснение : </span>{{question.explanation}}
       </div>
       {% endif %}
    </div>

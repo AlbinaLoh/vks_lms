@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %}Create Quiz | {{ course.name }} {% endblock title %}
+{% block title %}Создание теста {{ course.name }} {% endblock title %}
 {% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
@@ -23,7 +23,7 @@
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-               href="{% url 'allQuizzes' course.code %}">All tests</a></li>
+               href="{% url 'allQuizzes' course.code %}">Все тесты</a></li>
             <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Создать тест</li>
          </ol>
       </nav>
@@ -33,7 +33,7 @@
 <div class="container d-flex justify-content-center mt-3" id="form">
    <div class="border shadow-sm border-light rounded pb-4 px-3 col-lg-8 col-sm-12 mt-3">
       <span class="fw-bold fs-5 d-flex justify-content-center my-3">
-      Create Test
+      Создать тест
       </span>
       <form action="{% url 'quiz' course.code %}" method="POST">
          {% csrf_token %}
@@ -42,26 +42,26 @@
             <input type="text" class="form-control" id="title" name='title' required>
          </div>
          <div class="mb-3 fw-bold">
-            <label for="Instructions" class="form-label">Instructions</label>
+            <label for="Instructions" class="form-label">Рекомендация</label>
             <textarea class="form-control" id="Instructions" name="description"></textarea>
          </div>
          <div class="mb-3 fw-bold">
-            <label for="start" class="form-label">Start</label>
+            <label for="start" class="form-label">Начало</label>
             <input type="datetime-local" class="form-control" id="start" name="start" required>
          </div>
          <div class="mb-3 fw-bold">
-            <label for="end" class="form-label">End</label>
+            <label for="end" class="form-label">Конец</label>
             <input type="datetime-local" class="form-control" id="end" name="end" required>
          </div>
          <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" value="" id="checkbox" name="checkbox">
             <label class="form-check-label" for="checkbox">
-            Publish grade after submission
+            Опубликовать результаты
             </label>
          </div>
          <div class="d-flex justify-content-end p-2 border" style="background-color: rgb(250,250,250);">
-            <button type="submit" class="btn btn-sm btn-primary mx-2">Proceed</button>
-            <a href="{% url 'allQuizzes' course.code %}" type="button" class="btn btn-sm btn-danger">Discard</a>
+            <button type="submit" class="btn btn-sm btn-primary mx-2">Создать вопросы</button>
+            <a href="{% url 'allQuizzes' course.code %}" type="button" class="btn btn-sm btn-danger">Отмена</a>
          </div>
       </form>
    </div>

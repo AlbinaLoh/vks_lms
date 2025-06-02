@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %}Add Question {{quiz.title}} | {{ course.name }} {% endblock title %}
+{% block title %}Добавление вопросов в {{quiz.title}} | {{ course.name }} {% endblock title %}
 {% block profile %}
 {% url 'profile' faculty.faculty_id %}
 {% endblock %}
@@ -34,43 +34,43 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'allQuizzes' course.code %}">Tests</a></li>
-         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page"> Add Question-{{quiz.title}}</li>
+            href="{% url 'allQuizzes' course.code %}">Тесты</a></li>
+         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page"> Добавление вопросов в - {{quiz.title}}</li>
       </ol>
    </nav>
 </div>
 {% comment %} navigation links end  {% endcomment %}
 
 <div class="container shadow-sm rounded p-4 animate__animated animate__zoomInLeft" style="max-width: 768px;">
-   <p class="text-start">Add Question for <span class="fw-bold">"{{quiz.title}}"</span></p>
+   <p class="text-start">Создать вопрос для теста<span class="fw-bold">"{{quiz.title}}"</span></p>
    <form action=" {% url 'addQuestion' course.code quiz.id %} " method="post">
       {% csrf_token %}
       <div class="mb-3 row">
-         <label for="textarea" class="col-sm-2 col-form-label fw-bold">Question {{quiz.question_sl}}</label>
+         <label for="textarea" class="col-sm-2 col-form-label fw-bold">Вопрос {{quiz.question_sl}}</label>
          <div class="col-sm-10">
             <textarea class="form-control" id="textarea" style="height: 100px;" name="question" required></textarea>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="option" class="col-sm-2 col-form-label fw-bold">Option A</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Вариант A</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option1" required>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="option" class="col-sm-2 col-form-label fw-bold">Option B</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Вариант B</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option2" required>
          </div>
       </div>
       <div class="mb-3 row">
-         <label for="option" class="col-sm-2 col-form-label fw-bold">Option C</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Вариант C</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option3" required>
          </div>
       </div>
       <div class="mb-3 row ">
-         <label for="option" class="col-sm-2 col-form-label fw-bold">Option D</label>
+         <label for="option" class="col-sm-2 col-form-label fw-bold">Вариант D</label>
          <div class="col-sm-10">
             <input type="text" class="form-control" id="option" name="option4" required>
          </div>
@@ -82,14 +82,14 @@
          </div>
       </div>
       <select class="form-select mb-3" aria-label="Default select example" name="answer" required>
-         <option value="">Select Answer</option>
+         <option value="">Верный ответ</option>
          <option value="A"> A</option>
          <option value="B"> B</option>
          <option value="C"> C</option>
          <option value="D"> D</option>
       </select>
       <div class="mb-3 row">
-         <label for="explanantion" class="col-sm-2 col-form-label fw-bold">Explanantion</label>
+         <label for="explanantion" class="col-sm-2 col-form-label fw-bold">Объяснение</label>
          <div class="col-sm-10">
             <textarea class="form-control" id="explanantion" style="height: 60px;" name="explanation"></textarea>
          </div>

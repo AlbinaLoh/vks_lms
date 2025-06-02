@@ -22,7 +22,7 @@
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
             href="{% url 'faculty' course.code %}">{{ course.name }}</a></li>
          <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
-            href="{% url 'allQuizzes' course.code %}">Tests</a></li>
+            href="{% url 'allQuizzes' course.code %}">Тесты</a></li>
          <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">
             {{quiz.title}}
          </li>
@@ -34,39 +34,39 @@
    {% if quiz.start < time %}
    <div class="row">
       <div class="col-6">
-         <div class="fs-5 fw-bold"> {{quiz.title}} - Summary</div>
+         <div class="fs-5 fw-bold"> {{quiz.title}} - Рекомендация</div>
          <div>
             <p class="text-break word-break opacity-75"> {{quiz.description}} </p>
          </div>
          <div>
             <p><span class="material-symbols-outlined inline-icons me-2">
                groups
-               </span>Student Participated : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span>
+               </span>Обучающихся прошло тест : <span class="fw-bold">{{ quiz.attempted_students}}/{{total_students}}</span>
             </p>
             <p><span class="material-symbols-outlined inline-icons me-2">
                format_list_numbered
-               </span>Total Questions :<span class="fw-bold"> {{ quiz.total_questions}}</span> 
+               </span>Количество вопросов :<span class="fw-bold"> {{ quiz.total_questions}}</span> 
             </p>
          </div>
       </div>
       <div class="col-6 my-4 border-start">
          <p><span class="material-symbols-outlined inline-icons me-2">
             av_timer
-            </span>Start : <span class="fw-bold"> {{quiz.starts}} </span> 
+            </span>Начало : <span class="fw-bold"> {{quiz.starts}} </span> 
          </p>
          <p><span class="material-symbols-outlined inline-icons me-2">
             timer_off
-            </span>End : <span class="fw-bold"> {{ quiz.ends }} </span>
+            </span>Окончание : <span class="fw-bold"> {{ quiz.ends }} </span>
          </p>
          {% if quiz.total_marks %}
          <p><span class="material-symbols-outlined inline-icons me-2">
             military_tech
-            </span>Total Points :<span class="fw-bold"> {{ quiz.total_marks }}</span>
+            </span>Максимальная оценка :<span class="fw-bold"> {{ quiz.total_marks }}</span>
          </p>
          {% endif %}
          <p><span class="material-symbols-outlined inline-icons me-2">
             timelapse
-            </span>Test Duration : <span class="fw-bold"> {{ quiz.duration }}</span>
+            </span>Тест был открыт : <span class="fw-bold"> {{ quiz.duration }}</span>
          </p>
       </div>
    </div>
@@ -78,29 +78,29 @@
 </div>
 {% if quiz.publish_status %}
 <p class="text-success fw-bold d-flex justify-content-center my-3">
-   Grades Published!
+   Проверка выполнена!
 </p>
 {% else %}
 <div class="d-flex justify-content-center my-3">
    <form method="post" action=" {% url 'quizSummary' course.code quiz.id %} ">{% csrf_token %}
-      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Publish Grades</span> </button>
+      <button class="btn btn-sm btn-primary" type="submit"> <span class="px-1">Опубликовать оценки</span> </button>
    </form>
 </div>
 {% endif %}
 <div class="d-flex justify-content-center my-3">
-   <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Show Grades</button>
+   <button id="showMarks"  class="btn btn-sm btn-success mb-1 px-3">Просмотреть оценки</button>
 </div>
 <div class="container p-3 shadow-sm rounded" id="allmarks">
-   <div class="fw-bold">Points of Students</div>
+   <div class="fw-bold">Оценки обучающихся</div>
    {% if quiz.attempted_students %}
 <div class="table-responsive">
    <table class="table text-center table-borderless" style="white-space: nowrap;">
       <thead class="border-bottom">
          <tr>
             <!--th scope="col">SL</th-->
-            <th scope="col" colspan="2">Student</th>
+            <th scope="col" colspan="2">Обучающийся</th>
             <th scope="col">ID</th>
-            <th scope="col">Points</th>
+            <th scope="col">Оценка</th>
             <th scope="col">Submitted on</th>
          </tr>
       </thead>
@@ -125,11 +125,11 @@
    </table>
 </div>
    {% else %}
-   <div class="text-center">No students have attempted this test yet</div>
+   <div class="text-center">Обучающиеся не допущены к тесту</div>
    {% endif %}
 </div>
 <div class="container">
- <span class="text-muted fw-bold fst-italic" style="font-size:smaller">Click on question to show the details</span> 
+ <span class="text-muted fw-bold fst-italic" style="font-size:smaller">Просмотреть статистику ответов на вопросы</span> 
    {% for question in questions %}
    <div class="d-grid gap-2 mt-2">
       <button class="bt btn-sm liner-gradient-margo mb-2 border rounded py-3" type="button" data-bs-toggle="collapse" data-bs-target="#question{{question.id}}" aria-expanded="false" aria-controls="collapseExample">
@@ -145,23 +145,23 @@
             <p>D : {{question.option4}}</p>
             <div class="row">
                <div class="col-6">
-                  <p style="font-size: 15px;" class="margin-p-bottom">Answer : <span class="fw-bold">{{question.answer}}</span></p>
+                  <p style="font-size: 15px;" class="margin-p-bottom">Ответ : <span class="fw-bold">{{question.answer}}</span></p>
                </div>
                <div class="col-6">
-                  <p style="font-size: 15px;" class="margin-p-bottom">Points : <span class="fw-bold">{{question.marks}}</span></p>
+                  <p style="font-size: 15px;" class="margin-p-bottom">Оценка : <span class="fw-bold">{{question.marks}}</span></p>
                </div>
             </div>
             <div class="row">
                <div class="col-6">
-                  <p style="font-size: 15px;" class="fw-bold margin-p-bottom"><span class="bg-success rounded-circle px-1 text-center" style="color:white">{{ question.total_correct_answers }}</span> Correct answers</p>
+                  <p style="font-size: 15px;" class="fw-bold margin-p-bottom"><span class="bg-success rounded-circle px-1 text-center" style="color:white">{{ question.total_correct_answers }}</span> Верных ответов</p>
                </div>
                <div class="col-6">
-                  <p style="font-size: 15px;" class="fw-bold margin-p-bottom"><span class="bg-danger rounded-circle px-1 text-center" style="color:white">{{ question.total_wrong_answers }}</span> Wrong answers</p>
+                  <p style="font-size: 15px;" class="fw-bold margin-p-bottom"><span class="bg-danger rounded-circle px-1 text-center" style="color:white">{{ question.total_wrong_answers }}</span> Неверных ответов</p>
                </div>
             </div>
             {% if question.explanation %}
             <div class="mt-3 bg-info bg-opacity-25 py-2 border-start border-3 border-info rounded" style="font-size:smaller">
-               <span class="fw-bold px-2">Explanation : </span>{{question.explanation}}
+               <span class="fw-bold px-2">Объяснение : </span>{{question.explanation}}
             </div>
             {% endif %}
          </div>
@@ -176,7 +176,7 @@
 </div>
 {% else %}
 <div class="fw-bold text-center">
-   Test not started yet
+   Тест еще не начался
 </div>
 {% endif %}
 </div>
