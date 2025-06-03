@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-{% block title %} {{ assignment.title }} - eSLS {% endblock title %}
+{% block title %} {{ assignment.title }} Лекция {% endblock title %}
 {% block profile %}
 {% url 'profile' student.student_id %}
 {% endblock %}
@@ -65,7 +65,7 @@
 
       {% if submission.file %}
 
-      <label class="p-2 fw-bold" for=""> Your Submission : </label>
+      <label class="p-2 fw-bold" for=""> Ваше выполненное задание : </label>
       <a style="text-decoration:none" download href="{{submission.file.url}}">{{submission.file_name}}</a>
       {% endif %}
       <label id="timer" class="p-2 fw-bold" for="">Времени осталось: <span id="timeRemain" class="fw-semibold"></span></label><br>
@@ -88,7 +88,7 @@
    {% endif %}
 </div>
 <script>
-   var time = new Date('{{ assignment.deadline|date:"D, d M Y H:i:s"}}').getTime();
+   var time = new Date('{{ assignment.deadline|date:"d.m.Y H:i"}}').getTime();
    var rand = setInterval(function () {
        var now = new Date().getTime();
        var difference = time - now;
@@ -97,12 +97,12 @@
        var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
        var seconds = Math.floor((difference % (1000 * 60)) / 1000);
    
-       document.getElementById("timeRemain").innerHTML = days + " days " + hours + " hours " +
-           minutes + " minutes " + seconds + " seconds ";
+       document.getElementById("timeRemain").innerHTML = days + " дней " + hours + " часов " +
+           minutes + " минут " + seconds + " секунд ";
    
        if (difference < 0) {
            clearInterval(rand);
-           document.getElementById("timeRemain").innerHTML = "Closed!";
+           document.getElementById("timeRemain").innerHTML = "Задания закрыты";
            document.getElementById("timeRemain").style.color = "red";
            document.getElementById("fileSubmit").style.display = 'none';
        }
@@ -129,7 +129,7 @@
    let file = document.getElementById('file');
    file.addEventListener('change', function () {
       if (file.files[0].size > 10000000) {
-         fileError.innerHTML = 'File size must be less than 10MB';
+         fileError.innerHTML = 'Файл не должен превышать вес в 10MB';
          fileError.style.color = 'red';
          fileError.style.fontWeight = 'bold';
          file.value = '';

@@ -301,42 +301,70 @@ def addAssignment(request, code):
         return redirect('std_login')
 
 
+# def assignmentPage(request, code, id):
+#     course = Course.objects.get(code=code)
+#     if is_student_authorised(request, code):
+#         assignment = Assignment.objects.get(course_code=course.code, id=id)
+#         try:
+
+#             submission = Submission.objects.get(assignment=assignment, student=Student.objects.get(
+#                 student_id=request.session['student_id']))
+
+#             context = {
+#                 'assignment': assignment,
+#                 'course': course,
+#                 'submission': submission,
+#                 'time': datetime.datetime.now(),
+#                 'student': Student.objects.get(student_id=request.session['student_id']),
+#                 'courses': Student.objects.get(student_id=request.session['student_id']).course.all()
+#             }
+
+#             return render(request, 'main/assignment-portal.html', context)
+
+#         except:
+#             submission = None
+
+#         context = {
+#             'assignment': assignment,
+#             'course': course,
+#             'submission': submission,
+#             'time': datetime.datetime.now(),
+#             'student': Student.objects.get(student_id=request.session['student_id']),
+#             'courses': Student.objects.get(student_id=request.session['student_id']).course.all()
+#         }
+
+#         return render(request, 'main/assignment-portal.html', context)
+#     else:
+
+#         return redirect('std_login')
+
 def assignmentPage(request, code, id):
-    course = Course.objects.get(code=code)
-    if is_student_authorised(request, code):
-        assignment = Assignment.objects.get(course_code=course.code, id=id)
-        try:
-
-            submission = Submission.objects.get(assignment=assignment, student=Student.objects.get(
-                student_id=request.session['student_id']))
-
-            context = {
-                'assignment': assignment,
-                'course': course,
-                'submission': submission,
-                'time': datetime.datetime.now(),
-                'student': Student.objects.get(student_id=request.session['student_id']),
-                'courses': Student.objects.get(student_id=request.session['student_id']).course.all()
-            }
-
-            return render(request, 'main/assignment-portal.html', context)
-
-        except:
-            submission = None
-
-        context = {
-            'assignment': assignment,
-            'course': course,
-            'submission': submission,
-            'time': datetime.datetime.now(),
-            'student': Student.objects.get(student_id=request.session['student_id']),
-            'courses': Student.objects.get(student_id=request.session['student_id']).course.all()
-        }
-
-        return render(request, 'main/assignment-portal.html', context)
-    else:
-
+    course = get_object_or_404(Course, code=code)
+    if not is_student_authorised(request, code):
         return redirect('std_login')
+
+    assignment = get_object_or_404(Assignment, course_code=course.code, id=id)
+    student = get_object_or_404(Student, student_id=request.session['student_id'])
+
+    try:
+        submission = Submission.objects.get(assignment=assignment, student=student)
+    except Submission.DoesNotExist:
+        submission = None
+
+    is_before_deadline = assignment.deadline > timezone.now()
+
+    context = {
+        'assignment': assignment,
+        'course': course,
+        'submission': submission,
+        'time': timezone.now(),
+        'student': student,
+        'courses': student.course.all(),
+        'is_before_deadline': is_before_deadline,
+    }
+    return render(request, 'main/assignment-portal.html', context)
+
+
 
 
 def allAssignments(request, code):
@@ -391,43 +419,90 @@ def allAssignmentsSTD(request, code):
         return redirect('std_login')
 
 
+# def addSubmission(request, code, id):
+#     try:
+#         course = Course.objects.get(code=code)
+#         if is_student_authorised(request, code):
+#             # check if assignment is open
+#             assignment = Assignment.objects.get(course_code=course.code, id=id)
+#             if assignment.deadline < datetime.datetime.now():
+
+#                 return redirect('/assignment/' + str(code) + '/' + str(id))
+
+#             if request.method == 'POST' and request.FILES['file']:
+#                 assignment = Assignment.objects.get(
+#                     course_code=course.code, id=id)
+#                 submission = Submission(assignment=assignment, student=Student.objects.get(
+#                     student_id=request.session['student_id']), file=request.FILES['file'],)
+#                 submission.status = 'Submitted'
+#                 submission.save()
+#                 return HttpResponseRedirect(request.path_info)
+#             else:
+#                 assignment = Assignment.objects.get(
+#                     course_code=course.code, id=id)
+#                 submission = Submission.objects.get(assignment=assignment, student=Student.objects.get(
+#                     student_id=request.session['student_id']))
+#                 context = {
+#                     'assignment': assignment,
+#                     'course': course,
+#                     'submission': submission,
+#                     'time': datetime.datetime.now(),
+#                     'student': Student.objects.get(student_id=request.session['student_id']),
+#                     'courses': Student.objects.get(student_id=request.session['student_id']).course.all()
+#                 }
+
+#                 return render(request, 'main/assignment-portal.html', context)
+#         else:
+#             return redirect('std_login')
+#     except:
+#         return HttpResponseRedirect(request.path_info)
+
 def addSubmission(request, code, id):
-    try:
-        course = Course.objects.get(code=code)
-        if is_student_authorised(request, code):
-            # check if assignment is open
-            assignment = Assignment.objects.get(course_code=course.code, id=id)
-            if assignment.deadline < datetime.datetime.now():
+    course = get_object_or_404(Course, code=code)
+    if not is_student_authorised(request, code):
+        return redirect('std_login')
 
-                return redirect('/assignment/' + str(code) + '/' + str(id))
+    assignment = get_object_or_404(Assignment, course_code=course.code, id=id)
+    student = get_object_or_404(Student, student_id=request.session['student_id'])
 
-            if request.method == 'POST' and request.FILES['file']:
-                assignment = Assignment.objects.get(
-                    course_code=course.code, id=id)
-                submission = Submission(assignment=assignment, student=Student.objects.get(
-                    student_id=request.session['student_id']), file=request.FILES['file'],)
-                submission.status = 'Submitted'
-                submission.save()
-                return HttpResponseRedirect(request.path_info)
-            else:
-                assignment = Assignment.objects.get(
-                    course_code=course.code, id=id)
-                submission = Submission.objects.get(assignment=assignment, student=Student.objects.get(
-                    student_id=request.session['student_id']))
-                context = {
-                    'assignment': assignment,
-                    'course': course,
-                    'submission': submission,
-                    'time': datetime.datetime.now(),
-                    'student': Student.objects.get(student_id=request.session['student_id']),
-                    'courses': Student.objects.get(student_id=request.session['student_id']).course.all()
-                }
+    # Проверка дедлайна
+    if assignment.deadline < timezone.now():
+        messages.error(request, 'Дедлайн уже прошёл!')
+        return redirect('assignmentPage', code=code, id=id)
 
-                return render(request, 'main/assignment-portal.html', context)
-        else:
-            return redirect('std_login')
-    except:
-        return HttpResponseRedirect(request.path_info)
+    if request.method == 'POST' and request.FILES.get('file'):
+        submission, created = Submission.objects.get_or_create(
+            assignment=assignment,
+            student=student,
+            defaults={'status': 'Submitted'}
+        )
+        submission.file = request.FILES['file']
+        submission.status = 'Submitted'
+        submission.save()
+        messages.success(request, 'Задание успешно отправлено!')
+        return redirect('assignmentPage', code=code, id=id)
+
+    # Если GET или нет файла, показываем страницу с текущей submission
+    submission = Submission.objects.filter(assignment=assignment, student=student).first()
+    context = {
+        'assignment': assignment,
+        'course': course,
+        'submission': submission,
+        'time': timezone.now(),
+        'student': student,
+        'courses': student.course.all()
+    }
+    return render(request, 'main/assignment-portal.html', context)
+
+
+
+
+
+
+
+
+
+
 
 
 def viewSubmission(request, code, id):
