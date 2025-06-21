@@ -59,7 +59,7 @@
    file.addEventListener('change', function () {
       let file = this.files[0];
       if (file.size > 150000000) {
-         fileError.innerHTML = "File size can not be more than 150 MB";
+         fileError.innerHTML = "Файл не должен превышать 150 MB";
          fileError.style.color = 'red';
          this.value = '';
       }

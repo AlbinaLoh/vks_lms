@@ -101,7 +101,7 @@
             <th scope="col" colspan="2">Обучающийся</th>
             <th scope="col">ID</th>
             <th scope="col">Оценка</th>
-            <th scope="col">Submitted on</th>
+            <th scope="col">Закончил</th>
          </tr>
       </thead>
       <tbody>
@@ -116,8 +116,8 @@
             <td>{{student.total_marks_obtained}} / {{quiz.total_marks}}</td>
             <td>{{student.submission_time}}</td>
             {% else %}
-            <td>Did not attempt</td>
-            <td>Did not attempt</td>
+            <td>Не пытался</td>
+            <td>Не пыталсяt</td>
             {% endif %}
          </tr>
          {% endfor %}
@@ -309,7 +309,7 @@
    $('#allmarks').hide();
    $('#showMarks').click(function () {
       $(this).text(function (i, text) {
-         return text === "Hide Grades" ?  "Show Grades" : "Hide Grades";
+         return text === "Скрыть оценки" ?  "Просмотреть оценки" : "Скрыть оценки";
       });
       $('#allmarks').toggle('slow');
    });

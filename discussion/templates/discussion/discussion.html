@@ -79,7 +79,7 @@
                   {% else %}
                   <span class="fw-bold">{{discussion.sent_by}}</span>
                   {% endif %}
-                  <span class="text-muted mx-2" style="font-size:smaller">{{ discussion.time }}</span>
+                  <span class="text-muted mx-2" style="font-size:smaller">{{ discussion.sent_at|date:"d.m.Y H:i" }}</span>
                   <p class="text-wrap text-break my-2 px-2">{{discussion.content}}
                   </p>
                </div>

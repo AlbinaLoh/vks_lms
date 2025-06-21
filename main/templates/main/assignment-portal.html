@@ -32,11 +32,11 @@
    <div class="assignment-contex assignment-info" id="links">
       <h4>{{assignment.title}}</h4>
       <div class="p-2 text-break">{% autoescape off %}{{assignment.description}}{% endautoescape %}</div>
-      <h6 class="p-2 fw-bold">Дедлайн: <span class="px-2 text-danger"> {{assignment.post_date}} </span></h6>
+      <h6 class="p-2 fw-bold">Дедлайн: <span class="px-2 text-danger"> {{assignment.datetime|date:"d.m.Y H:i"}} </span></h6>
       <label class="p-2 fw-bold" for="">Максимальная оценка: </label>
       <span style="color: black;" class="p-2 fw-bold">{{assignment.marks}}</span><br>
       {% if assignment.file %}
-      <label class="p-2 fw-bold" for="">Материал лекции: &nbsp <a
+      <label class="p-2 fw-bold" for="">Задание лекции: &nbsp <a
          class="px-2 py-1 text-success bg-success bg-opacity-10 border border-success border-opacity-10 rounded-2"
          style="text-decoration: none; font-size: smaller !important" href="{{assignment.file.url}}"> &nbsp Просмотреть
       </a> &nbsp или &nbsp <a
@@ -46,7 +46,7 @@
       {% endif %}
       {% if submission.status %}
       <label class="p-2 fw-bold" for="">Статус: </label>
-      <span class="p-2 fw-bold text-success">{{submission.status}} {{submission.time_difference}} </span><br>
+      <span class="p-2 fw-bold text-success">Загружено {{submission.datetime|date:"d.m.Y H:i"}} </span><br>
       {% else %}
       <label class="p-2 fw-bold" for="">Статус: </label>
       <span style="color: red;" class="p-2 fw-bold">Не изучен!</span><br>
@@ -88,7 +88,9 @@
    {% endif %}
 </div>
 <script>
-   var time = new Date('{{ assignment.deadline|date:"d.m.Y H:i"}}').getTime();
+   var time = new Date('{{ assignment.deadline|date:"c" }}').getTime();
+
+// var time = new Date('{{ assignment.deadline|date:"d.m.Y H:i"}}').getTime();
    var rand = setInterval(function () {
        var now = new Date().getTime();
        var difference = time - now;

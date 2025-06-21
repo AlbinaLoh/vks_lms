@@ -60,9 +60,9 @@ def std_login(request):
                 request.session['faculty_id'] = id
                 return redirect('facultyCourses')
             else:
-                error_messages.append('Invalid login credentials.')
+                error_messages.append('Не верный ID')
         else:
-            error_messages.append('Invalid form data.')
+            error_messages.append('IНе верная форма ввода данных.')
     else:
         form = LoginForm()
 
@@ -232,7 +232,7 @@ def addAnnouncement(request, code):
             if form.is_valid():
                 form.save()
                 messages.success(
-                    request, 'Announcement added successfully.')
+                    request, 'Анонс успешно добавлен')
                 return redirect('/faculty/' + str(code))
         else:
             form = AnnouncementForm()
@@ -246,7 +246,7 @@ def deleteAnnouncement(request, code, id):
         try:
             announcement = Announcement.objects.get(course_code=code, id=id)
             announcement.delete()
-            messages.warning(request, 'Announcement deleted successfully.')
+            messages.warning(request, 'Анонс успешно удален')
             return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
@@ -276,7 +276,7 @@ def updateAnnouncement(request, code, id):
             form = AnnouncementForm(request.POST, instance=announcement)
             if form.is_valid():
                 form.save()
-                messages.info(request, 'Announcement updated successfully.')
+                messages.info(request, 'Анонс успешно изменен')
                 return redirect('/faculty/' + str(code))
         except:
             return redirect('/faculty/' + str(code))
@@ -292,7 +292,7 @@ def addAssignment(request, code):
             form.instance.course_code = Course.objects.get(code=code)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Assignment added successfully.')
+                messages.success(request, 'Лекционный материал успешно создан')
                 return redirect('/faculty/' + str(code))
         else:
             form = AssignmentForm()
@@ -576,7 +576,7 @@ def addCourseMaterial(request, code):
             form.instance.course_code = Course.objects.get(code=code)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'New course material added')
+                messages.success(request, 'Новые материалы добавлены')
                 return redirect('/faculty/' + str(code))
             else:
                 return render(request, 'main/course-material.html', {'course': Course.objects.get(code=code), 'faculty': Faculty.objects.get(faculty_id=request.session['faculty_id']), 'form': form})
@@ -592,7 +592,7 @@ def deleteCourseMaterial(request, code, id):
         course = Course.objects.get(code=code)
         course_material = Material.objects.get(course_code=course, id=id)
         course_material.delete()
-        messages.warning(request, 'Course material deleted')
+        messages.warning(request, 'Материалы удалены')
         return redirect('/faculty/' + str(code))
     else:
         return redirect('std_login')
@@ -675,7 +675,7 @@ def access(request, code):
                 
                 return redirect('/my/')
             else:
-                messages.error(request, 'Invalid key')
+                messages.error(request, 'Не верный ключ')
                 return HttpResponseRedirect(request.path_info)
         else:
             return render(request, 'main/access.html', {'course': course, 'student': student})
@@ -754,11 +754,11 @@ def changePassword(request):
                 # New and confirm password check is done in the client side
                 student.password = request.POST['newPassword']
                 student.save()
-                messages.success(request, 'Password was changed successfully')
+                messages.success(request, 'Пароль успешно изменен')
                 return redirect('/profile/' + str(student.student_id))
             else:
                 messages.error(
-                    request, 'Password is incorrect. Please try again')
+                    request, 'Не верный пароль')
                 return redirect('/changePassword/')
         else:
             return render(request, 'main/changePassword.html', {'student': student})
@@ -775,12 +775,12 @@ def changePasswordFaculty(request):
                 # New and confirm password check is done in the client side
                 faculty.password = request.POST['newPassword']
                 faculty.save()
-                messages.success(request, 'Password was changed successfully')
+                messages.success(request, 'Пароль успешно изменен')
                 return redirect('/facultyProfile/' + str(faculty.faculty_id))
             else:
                 print('error')
                 messages.error(
-                    request, 'Password is incorrect. Please try again')
+                    request, 'Не верный пароль')
                 return redirect('/changePasswordFaculty/')
         else:
             print(faculty)
@@ -797,11 +797,11 @@ def changePhoto(request):
             if request.FILES['photo']:
                 student.photo = request.FILES['photo']
                 student.save()
-                messages.success(request, 'Photo was changed successfully')
+                messages.success(request, 'Фото успешно изменено')
                 return redirect('/profile/' + str(student.student_id))
             else:
                 messages.error(
-                    request, 'Please select a photo')
+                    request, 'Загрузите фото')
                 return redirect('/changePhoto/')
         else:
             return render(request, 'main/changePhoto.html', {'student': student})
@@ -817,11 +817,11 @@ def changePhotoFaculty(request):
             if request.FILES['photo']:
                 faculty.photo = request.FILES['photo']
                 faculty.save()
-                messages.success(request, 'Photo was changed successfully')
+                messages.success(request, 'Фото успешно изменено')
                 return redirect('/facultyProfile/' + str(faculty.faculty_id))
             else:
                 messages.error(
-                    request, 'Please select a photo')
+                    request, 'Загрузите фото')
                 return redirect('/changePhotoFaculty/')
         else:
             return render(request, 'main/changePhotoFaculty.html', {'faculty': faculty})
@@ -965,7 +965,6 @@ def export_students_statistics(request):
         "Дата сдачи теста",
         "Посещено/Всего"
     ])
-
     courses = Course.objects.filter(faculty_id=faculty_id)
     for course in courses:
         students = course.students.all()
@@ -1094,3 +1093,5 @@ def submit_course_request(request, course_code):
         messages.success(request, "Заявка успешно подана.")
 
     return redirect('my_requests')
+
+

@@ -31,7 +31,7 @@
    <div class="row justify-content-center">
       <div class="col-md-8 shadow-lg p-3 rounded">
          <div class="text-center">
-            <div class="fw-bold mb-3 text-start">Пост</div>
+            <div class="fw-bold mb-3 text-start">Создать анонс</div>
             <div class="from-group">
                <form method="post" enctype="multipart/form-data">
                   {% csrf_token %}
@@ -39,7 +39,7 @@
                   <!-- submit button -->
                   <div class="d-flex justify-content-end bg-light border p-2 rounded">
                      <a class="btn btn-sm btn-outline-danger mx-2" href="{% url 'faculty' course.code %}">Отмена</a>
-                     <button class="btn btn-sm btn-primary" type="submit" id="submit"> <span class="mx-2">Пост</span></button>
+                     <button class="btn btn-sm btn-primary" type="submit" id="submit"> <span class="mx-2">Сохранить</span></button>
                   </div>
                </form>
             </div>

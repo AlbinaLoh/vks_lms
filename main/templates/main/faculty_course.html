@@ -131,7 +131,7 @@
                </a>
             </div>
             <div class="add-announcement" style="color:grey;">
-               {{announcement.post_date}}
+               {{announcement.datetime|date:"d.m.Y H:i"}}
             </div>
          </div>
          <hr>
@@ -163,7 +163,7 @@
                <p>Изучено : {{ assignment.submission_set.count}} / {{ studentCount }} </p>
             </div>
             <div class="text-muted">
-               {{assignment.post_date}}
+               {{assignment.datetime|date:"d.m.Y H:i"}}
             </div>
          </div>
          <!-- individual assignment ends -->
@@ -228,7 +228,7 @@
                Удалить
             </button>
             <div style="color:grey;">
-               {{material.post_date}}
+               {{material.datetime|date:"d.m.Y H:i"}}
             </div>
          </div>
          <hr>

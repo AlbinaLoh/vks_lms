@@ -75,7 +75,7 @@
             <div class="fs-6" id="annDescription{{announcement.id}}">{% autoescape off %}{{announcement.description}}{% endautoescape %}</div>
             <div class="d-flex flex-row-reverse border-bottom border-1">
                <div style="color:grey;" class="mb-1">
-                  {{announcement.post_date}}
+                  {{announcement.datetime|date:"d.m.Y H:i"}}
                </div>
             </div>
             <!-- individual announcement ends-->
@@ -95,9 +95,9 @@
             <a class="fw-bold"
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="d-flex justify-content-between">
-               <p style="font-size:15px"> Дата начала : {{ assignment.due_date}} </p>
+               <p style="font-size:15px"> Дата начала: {{ assignment.datetime|date:"d.m.Y H:i"}} </p>
                <div  style="color:grey;">
-                  {{assignment.post_date}}
+                  {{ assignment.deadline|date:"d.m.Y H:i" }}
                </div>
             </div>
             <!-- individual assignment ends -->
@@ -107,7 +107,7 @@
          </div>
          {% if assignments %}
          <div class="text-center fs-6 text-muted d-flex flex-column border-top border-1">
-            <span class="mt-2">Просмотреть {{ assignments.count}} of {{course.assignment_set.count}}
+            <span class="mt-2">Просмотреть {{ assignments.count}} из {{course.assignment_set.count}}
             {% if assignments.count == 1 %}из {% else %}лекции{% endif %}
             </span>
             <a class="fs-6" href=" {% url 'student-assignments' course.code %} ">Просмотреть все</a>
@@ -130,7 +130,7 @@
                <a class="fw-bold" href="{{ material.file.url }}"><span style="color:#9400d3" id="materialName">Файл : {{material.file.name}}</span></a><br>
                {% endif %}
                <div class="text-muted">
-                  {{material.post_date}}
+                  {{material.datetime|date:"d.m.Y H:i"}}
                </div>
             </div>
             {% empty %}

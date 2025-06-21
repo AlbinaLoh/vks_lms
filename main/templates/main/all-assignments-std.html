@@ -23,7 +23,7 @@
             </li>
             <li class="breadcrumb-item fw-bold"><a style="color: rgb(10, 10, 48)"
                href="{% url 'course' course.code %}">{{ course.name }}</a></li>
-            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Assignment</li>
+            <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Лекция</li>
          </ol>
       </nav>
    </div>
@@ -45,17 +45,17 @@
                href="{% url 'assignmentPage' course.code assignment.id %}">{{assignment.title}}</a>
             <div class="fs-6 text-muted border-bottom d-flex justify-content-between">
                <div>
-                  {{assignment.post_date}}
+                  {{assignment.datetime|date:"d.m.Y H:i"}}
                </div>
-               <p> Дата : {{ assignment.due_date}} </p>
+               <p> Дата : {{ assignment.deadline|date:"d.m.Y H:i"}} </p>
             </div>
             <!-- individual assignment ends -->
             {% empty %}
-            <h6 style="text-align:center">No assignments given yet</h6>
+            <h6 style="text-align:center">Лекционных материалов нет</h6>
             {% endfor %}
          </div>
          <div class="text-center fs-6 mt-3">
-            <p>Showing {{ assignments.count}} of {{course.assignment_set.count}} {% if assignments.count == 1 %}assignment {% else %}assignments{% endif %}</p>
+            <p>Показано {{ assignments.count}} из {{course.assignment_set.count}} {% if assignments.count == 1 %}лекции {% else %}лекций{% endif %}</p>
          </div>
       </div>
       <!-- assignment section ends -->

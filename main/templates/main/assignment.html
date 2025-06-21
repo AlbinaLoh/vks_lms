@@ -61,12 +61,12 @@
       var fileType = file.type;
       var validTypes = ['image/gif', 'image/jpeg', 'image/png', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (!validTypes.includes(fileType)) {
-         fileError.innerHTML = "Only pdf, png, jpg, jpeg, gif and word files are allowed";
+         fileError.innerHTML = "Поддерживаются только: pdf, png, jpg, jpeg, gif и txt файлы";
          fileError.classList.add("text-danger", "fw-bold", "border", "border-danger", "p-2", "rounded");
          this.value = '';
       }
       else if (file.size > 10000000) {
-         fileError.innerHTML = "File size should be less than 10MB";
+         fileError.innerHTML = "файл не должен превышать 10MB";
          fileError.classList.add("text-danger", "fw-bold", "border", "border-danger", "p-2", "rounded");
          this.value = '';
       }

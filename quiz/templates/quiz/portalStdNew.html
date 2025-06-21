@@ -42,39 +42,39 @@
                      </span>Количество вопросов : <span class="fw-bold">{{ total_questions }}</span></p>
                   <p><span class="material-symbols-outlined inline-icons me-2">
                      military_tech
-                     </span>Total Points : <span class="fw-bold">{{quiz.total_marks}}</span></p>
+                     </span>Максимальная оценка : <span class="fw-bold">{{quiz.total_marks}}</span></p>
                   <p class="fs-6"><span class="material-symbols-outlined inline-icons me-2">
                      timelapse
-                     </span>Duration : <span class="fw-bold">{{quiz.duration}} Hours</span></p>
+                     </span>Duration : <span class="fw-bold">{{quiz.duration}} часов</span></p>
                   <p class ="animate__animated animate__heartBeat fs-2 fw-bold text-success timer" id="start">Начать!</p>
                   {% comment %}starting timer{% endcomment %}
             <div class="container fs-2 d-flex flex-column" id="StartdaysSectionDV">
                <div class="text-center fs-6 d-inline-block fw-bold">
-                  <span class="text-muted startCon">STARTS IN</span>
+                  <span class="text-muted startCon">Начать</span>
                </div>
                <div class="text-center startCon">
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Startdays"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">DAYS</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">дней</span>
                      </div>
                   </div>
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Starthours"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">HOURS</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">часов</span>
                      </div>
                   </div>
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Startminutes"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">MINUTES</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">минут</span>
                      </div>
                   </div>
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Startseconds"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">SECONDS</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">секунд</span>
                      </div>
                   </div>
                </div>
@@ -83,36 +83,36 @@
             {% comment %} ending timer {% endcomment %}
             <div class="container d-none fs-2 d-flex flex-column" id="endTimerSection">
                <div class="text-center fs-6 d-inline-block fw-bold">
-                  <span class="text-muted endCon">ENDS IN</span>
+                  <span class="text-muted endCon">окончание</span>
                </div>
                <div class="text-center endCon">
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Enddays"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">DAYS</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">дней</span>
                      </div>
                   </div>
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Endhours"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">HOURS</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">часов</span>
                      </div>
                   </div>
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Endminutes"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">MINUTES</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">миут</span>
                      </div>
                   </div>
                   <div class="d-inline-block">
                      <div class="d-flex flex-column">
                         <span class="timer" id="Endseconds"></span>
-                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">SECONDS</span>
+                        <span class="text-start fw-bold text-muted" style="font-size: 11px;">секунд</span>
                      </div>
                   </div>
                </div>
             </div>
-            {% comment %} End Timer ends {% endcomment %}
+            {% comment %} Время окончания {% endcomment %}
          </div>
       </div>
       <div class="row py-2">
