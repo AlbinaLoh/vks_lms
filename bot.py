@@ -141,7 +141,7 @@ async def notify_updates(context: CallbackContext):
         last_course_id = max(last_course_id, course.id)
 
 def main():
-    TOKEN = "8118133343:AAHQGrj_tUN4Wzx4-W95nTD0-NaHs7Aav80"
+    TOKEN = " "
     application = Application.builder().token(TOKEN).build()
 
     schedule_conv = ConversationHandler(
